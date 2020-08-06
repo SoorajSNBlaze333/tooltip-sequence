@@ -8,9 +8,10 @@ const confirmationHTML = `<div id="tooltip-helper-confirmation" class="p-3 toolt
   </div>
 </div>`;
 
-const nextButtonHTML = `<button id="tooltip-helper-next-sequence" class="btn btn-sm btn-primary ml-2">Next</button>`;
+const nextButtonHTML = `<button id="tooltip-helper-next-sequence" class="btn btn-sm btn-primary mt-1 float-right">Next</button>`;
 
 var sequenceIndex = 0;
+var data = [];
 
 const createStage = (sequence) => {
   const { element, description } = sequence;
@@ -19,6 +20,14 @@ const createStage = (sequence) => {
 
   let elem = document.querySelector(element);
   let elemBoundaries = elem.getBoundingClientRect();
+
+  // if (sequenceIndex > 0) {
+  //   let prevElem = document.querySelector(data[sequenceIndex - 1].element);
+  //   prevElem.classList.remove('tooltip-helper-active-element');
+  //   elem.classList.add('tooltip-helper-active-element');
+  // } else {
+  //   elem.classList.add('tooltip-helper-active-element');
+  // }
 
   let activeElement = document.createElement('div');
   activeElement.classList.add("tooltip-helper-active");
@@ -34,8 +43,7 @@ const createStage = (sequence) => {
   descriptionElement.style.left = (elemBoundaries.left + 'px');
   descriptionElement.style.top = (elemBoundaries.top + elemBoundaries.height + 10) + 'px';
   descriptionElement.style.zIndex = 999;
-  descriptionElement.innerHTML = description;
-
+  descriptionElement.innerHTML = '<p class="m-0">' + description + '</p>';
   descriptionElement.innerHTML += nextButtonHTML;
 
   let wrapperElement = document.createElement('div');
@@ -57,6 +65,7 @@ const endSequence = () => {
 }
 
 exports.createSequence = (sequence) => {
+  data = sequence;
   document.body.innerHTML += backdropHTML;
   document.getElementById('tooltip-helper-backdrop').innerHTML = confirmationHTML;
   document.getElementById('tooltip-helper-confirmation-yes').addEventListener('click', function(e) {
@@ -70,6 +79,7 @@ exports.createSequence = (sequence) => {
       if (sequenceIndex <= (sequence.length - 1)) {
         return createStage(sequence[sequenceIndex]);
       } else {
+        document.querySelector(sequence[sequenceIndex - 1].element).classList.remove('tooltip-helper-active-element');
         return endSequence();
       }
     }

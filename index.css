@@ -19,12 +19,6 @@
   border-radius: 3px;
 }
 
-.tooltip-helper-active {
-  background-color: rgb(255, 0, 0);
-  animation: expand 1s infinite;
-  position: absolute;
-}
-
 .tooltip-helper-active-description {
   background-color: rgb(36, 36, 36);
   color: #fff;
@@ -32,6 +26,77 @@
   padding: 10px;
   font-size: 15px;
   border-radius: 5px;
+}
+
+.tooltip-helper-active {
+  background-color: rgb(255, 0, 0);
+  animation: expand 1s infinite;
+  position: absolute;
+}
+
+.tooltip-helper-active-element {
+  overflow: hidden;
+  position: relative;
+}
+
+.tooltip-helper-active-element::before, 
+.tooltip-helper-active-element::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  border: 2px solid transparent;
+  width: 0;
+  height: 0;
+}
+
+.tooltip-helper-active-element::before {
+  top: 0;
+  left: 0;
+  border-top-color: red;
+  border-right-color: red;
+  animation: border 2s infinite;
+}
+.tooltip-helper-active-element::after {
+  bottom: 0;
+  right: 0;
+  animation: border 2s 1s infinite, borderColor 2s 1s infinite;
+}
+
+@keyframes border {
+  0% {
+    width: 0;
+    height: 0;
+  }
+  25% {
+    width: 100%;
+    height: 0;
+  }
+  50% {
+    width: 100%;
+    height: 100%;
+  }
+  100% {
+    width: 100%;
+    height: 100%;
+  }
+}
+@keyframes borderColor {
+  0% {
+    border-bottom-color: red;
+    border-left-color: red;
+  }
+  50% {
+    border-bottom-color: red;
+    border-left-color: red;
+  }
+  51% {
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+  100% {
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
 }
 
 @keyframes expand {
