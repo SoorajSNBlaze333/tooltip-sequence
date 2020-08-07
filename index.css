@@ -17,6 +17,7 @@
   transform: translate(-50%, -50%);
   background-color: #fff;
   border-radius: 3px;
+  padding: 20px;
 }
 
 .tooltip-helper-active-description {
@@ -26,12 +27,18 @@
   padding: 10px;
   font-size: 15px;
   border-radius: 5px;
+  max-width: 400px;
+}
+
+.tooltip-helper-active-description p {
+  font-size: 14px;
 }
 
 .tooltip-helper-active {
-  background-color: rgb(255, 0, 0);
-  animation: expand 1s infinite;
   position: absolute;
+  box-shadow: 0 0 0 9999px rgba(27, 27, 27, 0.555);
+  transition-duration: 300ms;
+  /* animation: showActive 300ms 1; */
 }
 
 .tooltip-helper-active-element {
@@ -39,72 +46,42 @@
   position: relative;
 }
 
-.tooltip-helper-active-element::before, 
-.tooltip-helper-active-element::after {
-  content: '';
-  box-sizing: border-box;
-  position: absolute;
-  border: 2px solid transparent;
-  width: 0;
-  height: 0;
-}
-
-.tooltip-helper-active-element::before {
-  top: 0;
-  left: 0;
-  border-top-color: red;
-  border-right-color: red;
-  animation: border 2s infinite;
-}
-.tooltip-helper-active-element::after {
-  bottom: 0;
-  right: 0;
-  animation: border 2s 1s infinite, borderColor 2s 1s infinite;
-}
-
-@keyframes border {
-  0% {
-    width: 0;
-    height: 0;
-  }
-  25% {
-    width: 100%;
-    height: 0;
-  }
-  50% {
-    width: 100%;
-    height: 100%;
-  }
-  100% {
-    width: 100%;
-    height: 100%;
-  }
-}
-@keyframes borderColor {
-  0% {
-    border-bottom-color: red;
-    border-left-color: red;
-  }
-  50% {
-    border-bottom-color: red;
-    border-left-color: red;
-  }
-  51% {
-    border-bottom-color: transparent;
-    border-left-color: transparent;
-  }
-  100% {
-    border-bottom-color: transparent;
-    border-left-color: transparent;
-  }
-}
-
-@keyframes expand {
+@keyframes showActive {
   from {
-    transform: scale(1);
-    opacity: 1;
+    box-shadow: 0 0 0 0px transparent;
   } to {
-    transform: scale(2.5);
-    opacity: 0;
+    box-shadow: 0 0 0 9999px rgba(27, 27, 27, 0.555)
   }
+}
+
+.tour-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.tooltip-helper-confirmation-yes {
+  background-color: rgb(233, 233, 233);
+  border: none;
+  border-radius: 2px;
+  margin-right: 10px;
+  outline: none;
+  padding: 3px 10px;
+}
+
+.tooltip-helper-confirmation-no {
+  background-color: rgb(189, 39, 39);
+  border: none;
+  border-radius: 2px;
+  outline: none;
+  padding: 3px 10px;
+  color: #fff;
+}
+
+.tooltip-helper-confirmation-yes:active,
+.tooltip-helper-confirmation-yes:focus,
+.tooltip-helper-confirmation-no:active,
+.tooltip-helper-confirmation-no:focus {
+  outline: none;
 }

@@ -1,17 +1,16 @@
 const backdropHTML = `<div id="tooltip-helper-backdrop" class="tooltip-helper-backdrop"></div>`;
 
-const confirmationHTML = `<div id="tooltip-helper-confirmation" class="p-3 tooltip-helper-confirmation">
-  <div>Do you want to take a tour?</div>
-  <div class="mt-2 d-flex justify-content-end align-items-center">
-    <button id="tooltip-helper-confirmation-yes" class="btn btn-light btn-sm mr-2">Yes</button>
-    <button id="tooltip-helper-confirmation-no" class="btn btn-danger btn-sm">No</button>
+const confirmationHTML = `<div id="tooltip-helper-confirmation" class="tooltip-helper-confirmation">
+  <div id="tour-desc" class="tour-desc"></div>
+  <div class="tour-buttons">
+    <button id="tooltip-helper-confirmation-yes" class="tooltip-helper-confirmation-yes">Yes</button>
+    <button id="tooltip-helper-confirmation-no" class="tooltip-helper-confirmation-no">No</button>
   </div>
 </div>`;
 
-const nextButtonHTML = `<button id="tooltip-helper-next-sequence" class="btn btn-sm btn-primary mt-1 float-right">Next</button>`;
+const nextButtonHTML = `<button id="tooltip-helper-next-sequence" class="btn btn-sm btn-primary mt-2 float-right">Next</button>`;
 
 var sequenceIndex = 0;
-var data = [];
 
 const createStage = (sequence) => {
   const { element, description } = sequence;
@@ -19,24 +18,16 @@ const createStage = (sequence) => {
   backdrop.removeChild(backdrop.firstChild);
 
   let elem = document.querySelector(element);
+  let styles = getComputedStyle(elem);
   let elemBoundaries = elem.getBoundingClientRect();
-
-  // if (sequenceIndex > 0) {
-  //   let prevElem = document.querySelector(data[sequenceIndex - 1].element);
-  //   prevElem.classList.remove('tooltip-helper-active-element');
-  //   elem.classList.add('tooltip-helper-active-element');
-  // } else {
-  //   elem.classList.add('tooltip-helper-active-element');
-  // }
 
   let activeElement = document.createElement('div');
   activeElement.classList.add("tooltip-helper-active");
-  activeElement.style.left = (elemBoundaries.left + (elemBoundaries.width/2) - 10) + 'px';
-  activeElement.style.top = (elemBoundaries.top + (elemBoundaries.height/2) - 10) + 'px';
-  activeElement.style.zIndex = 1000;
-  activeElement.style.height = '20px';
-  activeElement.style.width = '20px';
-  activeElement.style.borderRadius = '10px';
+  activeElement.style.top = elemBoundaries.top + 'px';
+  activeElement.style.left = elemBoundaries.left + 'px';
+  activeElement.style.height = elemBoundaries.height + 'px';
+  activeElement.style.width = elemBoundaries.width + 'px';
+  activeElement.style.borderRadius = styles.borderRadius;
 
   let descriptionElement = document.createElement('div');
   descriptionElement.classList.add("tooltip-helper-active-description");
@@ -54,8 +45,9 @@ const createStage = (sequence) => {
 }
 
 const startSequence = (sequence) => {
+  let currentSequence = sequence[sequenceIndex];
   document.getElementById('tooltip-helper-backdrop').style.background = 'transparent';
-  return createStage(sequence);
+  return createStage(currentSequence);
 }
 
 const endSequence = () => {
@@ -64,14 +56,19 @@ const endSequence = () => {
   element.parentNode.removeChild(element);
 }
 
-exports.createSequence = (sequence) => {
-  data = sequence;
+exports.createSequence = (data) => {
+  const { 
+    welcomeText, 
+    confirmText, 
+    cancelText, 
+    sequence 
+  } = data;
   document.body.innerHTML += backdropHTML;
   document.getElementById('tooltip-helper-backdrop').innerHTML = confirmationHTML;
-  document.getElementById('tooltip-helper-confirmation-yes').addEventListener('click', function(e) {
-    let currentSequence = sequence[sequenceIndex];
-    return startSequence(currentSequence);
-  });
+  document.getElementById('tour-desc').innerText = welcomeText;
+  document.getElementById('tooltip-helper-confirmation-yes').innerText = confirmText;
+  document.getElementById('tooltip-helper-confirmation-no').innerText = cancelText;
+  document.getElementById('tooltip-helper-confirmation-yes').addEventListener('click', startSequence.bind(this, sequence));
   document.getElementById('tooltip-helper-confirmation-no').addEventListener('click', endSequence);
   document.body.addEventListener('click', function(e) {
     if (e.target.id === 'tooltip-helper-next-sequence') {
