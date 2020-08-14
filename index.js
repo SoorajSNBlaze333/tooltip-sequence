@@ -21,65 +21,60 @@ const createStage = (sequence) => {
   let styles = getComputedStyle(elem);
   let elemBoundaries = elem.getBoundingClientRect();
 
-  let activeElement = document.createElement('div');
+  let activeElement = document.createElement("div");
   activeElement.classList.add("tooltip-helper-active");
-  activeElement.style.top = elemBoundaries.top + 'px';
-  activeElement.style.left = elemBoundaries.left + 'px';
-  activeElement.style.height = elemBoundaries.height + 'px';
-  activeElement.style.width = elemBoundaries.width + 'px';
+  activeElement.style.top = elemBoundaries.top + "px";
+  activeElement.style.left = elemBoundaries.left + "px";
+  activeElement.style.height = elemBoundaries.height + "px";
+  activeElement.style.width = elemBoundaries.width + "px";
   activeElement.style.borderRadius = styles.borderRadius;
 
-  let descriptionElement = document.createElement('div');
+  let descriptionElement = document.createElement("div");
   descriptionElement.classList.add("tooltip-helper-active-description");
-  descriptionElement.style.left = (elemBoundaries.left + 'px');
-  descriptionElement.style.top = (elemBoundaries.top + elemBoundaries.height + 10) + 'px';
+  descriptionElement.style.left = elemBoundaries.left + "px";
+  descriptionElement.style.top = elemBoundaries.top + elemBoundaries.height + 10 + "px";
   descriptionElement.style.zIndex = 999;
-  descriptionElement.innerHTML = '<p class="m-0">' + description + '</p>';
+  descriptionElement.innerHTML = '<p class="m-0">' + description + "</p>";
   descriptionElement.innerHTML += nextButtonHTML;
 
-  let wrapperElement = document.createElement('div');
+  let wrapperElement = document.createElement("div");
   wrapperElement.append(activeElement);
   wrapperElement.append(descriptionElement);
 
   backdrop.append(wrapperElement);
-}
+};
 
 const startSequence = (sequence) => {
   let currentSequence = sequence[sequenceIndex];
-  document.getElementById('tooltip-helper-backdrop').style.background = 'transparent';
+  document.getElementById("tooltip-helper-backdrop").style.background = "transparent";
   return createStage(currentSequence);
-}
+};
 
 const endSequence = () => {
-  document.getElementById('tooltip-helper-backdrop').style.background = 'transparent';
+  document.getElementById("tooltip-helper-backdrop").style.background = "transparent";
   const element = document.getElementById("tooltip-helper-backdrop");
   element.parentNode.removeChild(element);
-}
+};
 
-exports.createSequence = (data) => {
-  const { 
-    welcomeText, 
-    confirmText, 
-    cancelText, 
-    sequence 
-  } = data;
-  
+export function createSequence(data) {
+  const { welcomeText, confirmText, cancelText, sequence } = data;
+
   document.body.innerHTML += backdropHTML;
-  document.getElementById('tooltip-helper-backdrop').innerHTML = confirmationHTML;
-  document.getElementById('tour-desc').innerText = welcomeText;
-  document.getElementById('tooltip-helper-confirmation-yes').innerText = confirmText;
-  document.getElementById('tooltip-helper-confirmation-no').innerText = cancelText;
-  document.getElementById('tooltip-helper-confirmation-yes').addEventListener('click', startSequence.bind(this, sequence));
-  document.getElementById('tooltip-helper-confirmation-no').addEventListener('click', endSequence);
-  document.body.addEventListener('click', function(e) {
-    if (e.target.id === 'tooltip-helper-next-sequence') {
+  document.getElementById("tooltip-helper-backdrop").innerHTML = confirmationHTML;
+  document.getElementById("tour-desc").innerText = welcomeText;
+  document.getElementById("tooltip-helper-confirmation-yes").innerText = confirmText;
+  document.getElementById("tooltip-helper-confirmation-no").innerText = cancelText;
+  document.getElementById("tooltip-helper-confirmation-yes").addEventListener("click", startSequence.bind(this, sequence));
+  document.getElementById("tooltip-helper-confirmation-no").addEventListener("click", endSequence);
+  document.body.addEventListener("click", function (e) {
+    if (e.target.id === "tooltip-helper-next-sequence") {
       sequenceIndex += 1;
-      if (sequenceIndex <= (sequence.length - 1)) {
+      if (sequenceIndex <= sequence.length - 1) {
         return createStage(sequence[sequenceIndex]);
       } else {
-        document.querySelector(sequence[sequenceIndex - 1].element).classList.remove('tooltip-helper-active-element');
+        document.querySelector(sequence[sequenceIndex - 1].element).classList.remove("tooltip-helper-active-element");
         return endSequence();
       }
     }
-  })
+  });
 }
