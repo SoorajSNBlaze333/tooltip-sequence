@@ -9,8 +9,7 @@
   "author": "",
   "license": "MIT",
   "files": [
-    "index.css",
-    "index.js"
+    "dist"
   ],
   "keywords": [
     "UI",

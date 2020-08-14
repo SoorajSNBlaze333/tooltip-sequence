@@ -63,6 +63,7 @@ exports.createSequence = (data) => {
     cancelText, 
     sequence 
   } = data;
+  
   document.body.innerHTML += backdropHTML;
   document.getElementById('tooltip-helper-backdrop').innerHTML = confirmationHTML;
   document.getElementById('tour-desc').innerText = welcomeText;
