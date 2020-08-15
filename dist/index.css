@@ -28,6 +28,8 @@
   font-size: 15px;
   border-radius: 5px;
   max-width: 400px;
+  transition-duration: 1000ms;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .tooltip-helper-active-description p {
@@ -37,8 +39,7 @@
 .tooltip-helper-active {
   position: absolute;
   box-shadow: 0 0 0 9999px rgba(27, 27, 27, 0.555);
-  transition-duration: 300ms;
-  /* animation: showActive 300ms 1; */
+  transition-duration: 200ms;
 }
 
 .tooltip-helper-active-element {
@@ -85,4 +86,26 @@
 .tooltip-helper-confirmation-no:active,
 .tooltip-helper-confirmation-no:focus {
   outline: none;
+}
+
+.tooltip-helper-next-sequence,
+.tooltip-helper-prev-sequence {
+  background-color: rgb(22, 121, 251);
+  border: none;
+  border-radius: 2px;
+  outline: none;
+  padding: 3px 10px;
+  color: #fff;
+}
+
+.mt-1 {
+  margin-top: 5px;
+}
+
+.mt-2 {
+  margin-top: 10px;
+}
+
+.ml-2 {
+  margin-left: 10px;
 }

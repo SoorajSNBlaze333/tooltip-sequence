@@ -8,10 +8,13 @@ const confirmationHTML = `<div id="tooltip-helper-confirmation" class="tooltip-h
   </div>
 </div>`;
 
-const nextButtonHTML = `<button id="tooltip-helper-next-sequence" class="btn btn-sm btn-primary mt-2 float-right">Next</button>`;
+const prevButtonHTML = `<button id="tooltip-helper-prev-sequence" class="tooltip-helper-prev-sequence mt-2">Previous</button>`;
+
+const nextButtonHTML = `<button id="tooltip-helper-next-sequence" class="tooltip-helper-next-sequence mt-2 ml-2">Next</button>`;
 
 export {
   backdropHTML,
   confirmationHTML,
+  prevButtonHTML,
   nextButtonHTML
 }
