@@ -1,4 +1,4 @@
-var bundle = (function () {
+var createSequence = (function () {
   'use strict';
 
   const getElementById = (id) => document.getElementById(id);
@@ -88,8 +88,6 @@ var bundle = (function () {
     });
   };
 
-  var index = { createSequence };
-
-  return index;
+  return createSequence;
 
 }());
