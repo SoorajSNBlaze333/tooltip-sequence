@@ -12,9 +12,12 @@ const prevButtonHTML = `<button id="tooltip-helper-prev-sequence" class="tooltip
 
 const nextButtonHTML = `<button id="tooltip-helper-next-sequence" class="tooltip-helper-next-sequence mt-2 ml-2">Next</button>`;
 
+const closeButtonHTML = `<button id="tooltip-helper-end-sequence" class="tooltip-helper-end-sequence">Quit</button>`;
+
 export {
   backdropHTML,
   confirmationHTML,
+  closeButtonHTML,
   prevButtonHTML,
   nextButtonHTML
 }

@@ -2,6 +2,40 @@
 
 A Sequential tooltip generator, that guides your users to new or existing features, by taking them on a tour across the features that you want them to see and be helped on.
 
+
+# unpkg
+
+In your `base.html` add the unpkg to the head tag
+```html
+<link rel="stylesheet" href="https://unpkg.com/tooltip-sequence@latest/dist/index.css">
+<script src="https://unpkg.com/tooltip-sequence@latest/dist/index.min.js"></script>
+
+<script>
+  const options = {
+    welcomeText: "Let us take you on a quick tour of the page!",
+    confirmText: "Let's start",
+    cancelText: "Maybe later",
+    sequence: [
+      {
+        element: "#brand-name",
+        description: "This is the brand name of the App.",
+      },
+      {
+        element: "#home-nav",
+        description: "Click here to go to Home page",
+      },
+      {
+        element: "#edit-profile",
+        description: "This is the edit profile button",
+      },
+    ],
+  };
+  createSequence(options);
+</script>
+```
+
+# npm
+
 ## Installation
 
 Install the package using

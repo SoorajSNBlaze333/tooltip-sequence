@@ -1,5 +1,5 @@
 import { getElementById, getElement } from './src/utils/helpers';
-import { backdropHTML, nextButtonHTML, prevButtonHTML, confirmationHTML } from './src/utils/constants';
+import { backdropHTML, nextButtonHTML, prevButtonHTML, confirmationHTML, closeButtonHTML } from './src/utils/constants';
 
 const offset = 10;
 var sequenceIndex = 0;
@@ -10,6 +10,7 @@ const createStage = (sequence, originalSequence) => {
 
   let elem = getElement(element);
   if (!elem) return endSequence();
+  getElement('body').classList.add('stop-scroll');
   elem.scrollIntoView({ behaviour: 'smooth', block: 'center' });
   let styles = getComputedStyle(elem);
   let elemBoundaries = elem.getBoundingClientRect();
@@ -34,7 +35,8 @@ const createStage = (sequence, originalSequence) => {
   if (!descriptionElement) {
     descriptionElement = document.createElement("div");
     descriptionElement.classList.add("tooltip-helper-active-description");
-    descriptionElement.innerHTML += "<p id='tooltip-helper-active-description-text' class='m-0'>" + description + "</p>";
+    descriptionElement.innerHTML += closeButtonHTML;
+    descriptionElement.innerHTML += "<p id='tooltip-helper-active-description-text' class='mt-2 mb-2'>" + description + "</p>";
     descriptionElement.innerHTML += prevButtonHTML;
     descriptionElement.innerHTML += nextButtonHTML;
     backdrop.append(descriptionElement);
@@ -67,6 +69,7 @@ const startSequence = (sequence) => {
 };
 
 const endSequence = () => {
+  getElement('body').classList.remove('stop-scroll');
   getElementById("tooltip-helper-backdrop").style.background = "transparent";
   const element = getElementById("tooltip-helper-backdrop");
   element.parentNode.removeChild(element);
@@ -109,6 +112,7 @@ const createSequence = (data) => {
       case 'tooltip-helper-confirmation-yes': return startSequence(sequence);
       case 'tooltip-helper-next-sequence': return next(sequence);
       case 'tooltip-helper-prev-sequence': return prev(sequence);
+      case 'tooltip-helper-end-sequence': return endSequence();
       case 'tooltip-helper-confirmation-no': return endSequence();
       default: return;
     }

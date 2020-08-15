@@ -105,20 +105,36 @@
   color: #fff;
 }
 
-.tooltip-disabled-btn {
-  background-color: rgb(78, 78, 78) !important;
-  user-select: none !important;
-  color: rgba(255, 255, 255, 0.671);
+.tooltip-helper-end-sequence {
+  background-color: rgb(131, 131, 131);
+  border: none;
+  border-radius: 2px;
+  outline: none;
+  padding: 3px 10px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.mt-1 {
-  margin-top: 5px;
+.tooltip-disabled-btn {
+  background-color: rgb(92, 92, 92) !important;
+  user-select: none !important;
+  color: rgba(255, 255, 255, 0.671);
 }
 
 .mt-2 {
   margin-top: 10px;
 }
 
+.mb-2 {
+  margin-bottom: 10px;
+}
+
 .ml-2 {
   margin-left: 10px;
+}
+
+.stop-scroll {
+  overflow: hidden;
 }
