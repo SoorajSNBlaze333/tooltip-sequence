@@ -73,4 +73,4 @@ const createSequence = (data) => {
   });
 }
 
-export default { createSequence };
+export default createSequence;
