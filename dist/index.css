@@ -28,7 +28,11 @@
   font-size: 15px;
   border-radius: 5px;
   max-width: 400px;
-  transition-duration: 1000ms;
+  z-index: 999;
+  transition-property: transform;
+  will-change: transform;
+  transform: translateX(0px) translateY(0px);
+  transition-duration: 150ms;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
@@ -39,7 +43,10 @@
 .tooltip-helper-active {
   position: absolute;
   box-shadow: 0 0 0 9999px rgba(27, 27, 27, 0.555);
-  transition-duration: 200ms;
+  transition-duration: 150ms;
+  transition-property: transform;
+  will-change: transform;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .tooltip-helper-active-element {

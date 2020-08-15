@@ -1,4 +1,4 @@
-import { getElementById, getElement } from './src/utils/helpers';
+import { getElementById, getElement, getElements } from './src/utils/helpers';
 import { backdropHTML, nextButtonHTML, prevButtonHTML, confirmationHTML } from './src/utils/constants';
 
 const offset = 10;
@@ -9,13 +9,19 @@ const createStage = (sequence) => {
   const backdrop = getElementById("tooltip-helper-backdrop");
 
   let elem = getElement(element);
+  elem.scrollIntoView({ behaviour: 'smooth', block: 'center' });
   let styles = getComputedStyle(elem);
   let elemBoundaries = elem.getBoundingClientRect();
+  let position = {
+    x: elemBoundaries.left,
+    y: elemBoundaries.top + elemBoundaries.height + offset
+  }
 
   let activeElement = getElement("#tooltip-helper-backdrop .tooltip-helper-active");
   if (!activeElement) {
     activeElement = document.createElement("div");
     activeElement.classList.add("tooltip-helper-active");
+    backdrop.append(activeElement);
   }
   activeElement.style.top = elemBoundaries.top + "px";
   activeElement.style.left = elemBoundaries.left + "px";
@@ -27,18 +33,13 @@ const createStage = (sequence) => {
   if (!descriptionElement) {
     descriptionElement = document.createElement("div");
     descriptionElement.classList.add("tooltip-helper-active-description");
-    descriptionElement.innerHTML += "<p class='m-0'>" + description + "</p>";
+    descriptionElement.innerHTML += "<p id='tooltip-helper-active-description-text' class='m-0'>" + description + "</p>";
     descriptionElement.innerHTML += prevButtonHTML;
     descriptionElement.innerHTML += nextButtonHTML;
+    backdrop.append(descriptionElement);
   }
-  descriptionElement.style.left = elemBoundaries.left + "px";
-  descriptionElement.style.top = elemBoundaries.top + elemBoundaries.height + offset + "px";
-  descriptionElement.style.zIndex = 999;
-  // getElement("#tooltip-helper-backdrop .tooltip-helper-active-description p").innerHTML = description;
-
-
-  backdrop.append(activeElement);
-  backdrop.append(descriptionElement);
+  descriptionElement.style.transform = "translateX(" + position.x + "px) translateY(" + position.y + "px)";
+  getElementById("tooltip-helper-active-description-text").innerHTML = description;
 };
 
 const startSequence = (sequence) => {
@@ -92,7 +93,7 @@ const createSequence = (data) => {
       case 'tooltip-helper-confirmation-yes': return startSequence(sequence);
       case 'tooltip-helper-next-sequence': return next(sequence);
       case 'tooltip-helper-prev-sequence': return prev(sequence);
-      case 'tooltip-helper-confirmation-no': return endSequence;
+      case 'tooltip-helper-confirmation-no': return endSequence();
       default: return;
     }
   });
