@@ -13,8 +13,8 @@ npm install tooltip-sequence --save
 ## Usage
 
 ```js
-import { createSequence } from "tooltip-sequence";
-import "tooltip-sequence/index.css";
+import createSequence from "tooltip-sequence";
+import "tooltip-sequence/dist/index.css";
 
 const options = {
   welcomeText: "Let us take you on a quick tour of the page!",
