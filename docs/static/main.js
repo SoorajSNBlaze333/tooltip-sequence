@@ -22,7 +22,7 @@ var bundle = (function () {
   const createStage = (sequence) => {
     const { element, description } = sequence;
     const backdrop = getElementById("tooltip-helper-backdrop");
-    // backdrop.removeChild(backdrop.firstChild);
+    backdrop.removeChild(backdrop.firstChild);
 
     let elem = getElement(element);
     let styles = getComputedStyle(elem);

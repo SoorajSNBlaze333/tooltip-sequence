@@ -10,3 +10,4 @@ resources/
 resources/*
 /resources/
 /resources/*
+docs/static/main.js
