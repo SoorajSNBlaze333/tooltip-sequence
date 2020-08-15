@@ -105,6 +105,12 @@
   color: #fff;
 }
 
+.tooltip-disabled-btn {
+  background-color: rgb(78, 78, 78) !important;
+  user-select: none !important;
+  color: rgba(255, 255, 255, 0.671);
+}
+
 .mt-1 {
   margin-top: 5px;
 }

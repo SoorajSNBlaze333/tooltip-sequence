@@ -3,6 +3,154 @@
 <section class="w-full lg:w-8/12 xl:w-5/12 mx-auto py-20 md:py-32">
   <p class="block md:hidden mb-3 text-gray-500 uppercase tracking-wide font-semibold text-xs">Welcome to Tooltip Sequence</p>
   <p class="text-base md:text-lg text-gray-600 mb-5">{{ .Site.Params.description }}</p>
+
+  <article
+    class="prose max-w-full w-full md:w-4/5"
+    itemid="https://kutty.netlify.app/docs/"
+    itemscope=""
+    itemtype="http://schema.org/BlogPosting"
+  >
+    <h1 itemprop="headline" title="Installation &amp; Usage">
+      Installation &amp; Usage
+    </h1>
+    <p itemprop="description"></p>
+    <p>
+      Kutty is a tailwind plugin for building web applications. It has a set
+      of accessible and reusable components that are commonly used in web
+      applications.
+    </p>
+    <p>This plugin requires Tailwind CSS 1.4 or later.</p>
+    <h2 class="group" id="installation">
+      Installation
+      <a class="invisible group-hover:visible" href="#installation">#</a>
+    </h2>
+    <div class="highlight" id="install-step">
+      <pre
+        style="
+          background-color: #fff;
+          -moz-tab-size: 2;
+          -o-tab-size: 2;
+          tab-size: 2;
+        "
+      ><code class="language-sh" data-lang="sh">npm i kutty --save
+  </code></pre>
+    </div>
+    <p>
+      Tailwind CSS is not included in this package. Learn how to
+      <a
+        id="widget-selector"
+        href="https://tailwindcss.com/docs/installation/"
+        target="_blank"
+        rel="noreferrer noopener"
+        >install tailwind here</a
+      >.
+    </p>
+    <h2 class="group" id="usage">
+      Usage <a class="invisible group-hover:visible" href="#usage">#</a>
+    </h2>
+    <h3 class="group" id="for-css">
+      For CSS <a class="invisible group-hover:visible" href="#for-css">#</a>
+    </h3>
+    <p>Require the installed plugin directly to your Tailwind config:</p>
+    <div class="highlight add-plugin">
+      <pre
+        style="
+          background-color: #fff;
+          -moz-tab-size: 2;
+          -o-tab-size: 2;
+          tab-size: 2;
+        "
+      ><code class="language-js" data-lang="js"><span style="color:#998;font-style:italic">// tailwind.config.js
+  </span><span style="color:#998;font-style:italic"></span>plugins<span style="color:#000;font-weight:700">:</span> [require(<span style="color:#d14">"kutty"</span>)],
+  </code></pre>
+    </div>
+    <h3 class="group" id="for-js">
+      For JS <a class="invisible group-hover:visible" href="#for-js">#</a>
+    </h3>
+    <p>Place the following script tag before the closing body tag:</p>
+    <div class="highlight"></div>
+    <h2 class="group" id="development">
+      Development
+      <a class="invisible group-hover:visible" href="#development">#</a>
+    </h2>
+    <p>
+      You need
+      <a href="https://gohugo.io/" target="_blank" rel="noreferrer noopener"
+        >Hugo</a
+      >
+      to run the dev server. If you have
+      <a href="https://brew.sh/" target="_blank" rel="noreferrer noopener"
+        >Homebrew</a
+      >
+      you can do the following:
+    </p>
+    <div class="highlight">
+      <pre
+        style="
+          background-color: #fff;
+          -moz-tab-size: 2;
+          -o-tab-size: 2;
+          tab-size: 2;
+        "
+      ><code class="language-sh" data-lang="sh">brew install hugo
+  </code></pre>
+    </div>
+    <p>
+      Check this
+      <a
+        href="https://gohugo.io/getting-started/installing/"
+        target="_blank"
+        rel="noreferrer noopener"
+        >Hugo installation page</a
+      >
+      for installing on other systems.
+    </p>
+    <p>
+      Then clone the repo, install dependencies, and start the server locally.
+    </p>
+    <div class="highlight">
+      <pre
+        style="
+          background-color: #fff;
+          -moz-tab-size: 2;
+          -o-tab-size: 2;
+          tab-size: 2;
+        "
+      ><code class="language-sh" data-lang="sh">git clone https://github.com/praveenjuge/kutty.git
+  <span style="color:#0086b3">cd</span> kutty
+  npm i
+  npm start
+  </code></pre>
+    </div>
+    <p>
+      Open
+      <a
+        href="http://localhost:1313"
+        target="_blank"
+        rel="noreferrer noopener"
+        ><code>http://localhost:1313</code></a
+      >
+      in your browser.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Scripts</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>npm start</code></td>
+          <td>Starts a local Hugo server and Tailwind Watcher</td>
+        </tr>
+        <tr>
+          <td><code>npm run production</code></td>
+          <td>For generating production docs files</td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
 </section>
 
 <script>
@@ -11,14 +159,11 @@
     confirmText: "Let's start",
     cancelText: "Maybe later",
     sequence: [{
-      element: '#brand-name',
-      description: 'This is the brand name of the App.'
+      element: '#install-step',
+      description: 'Run this cli to install kutty.'
     }, {
-      element: '#home-nav',
-      description: 'Click here to go to Home page'
-    }, {
-      element: '#edit-profile',
-      description: 'This is the edit profile button'
+      element: '.add-plugin',
+      description: 'Add kutty plugin to tailwind.'
     }]
   };
   window.addEventListener("DOMContentLoaded", function() {

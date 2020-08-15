@@ -1,4 +1,4 @@
-var bundle = (function () {
+var createSequence = (function () {
   'use strict';
 
   const getElementById = (id) => document.getElementById(id);
@@ -14,53 +14,103 @@ var bundle = (function () {
   </div>
 </div>`;
 
-  const nextButtonHTML = `<button id="tooltip-helper-next-sequence" class="btn btn-sm btn-primary mt-2 float-right">Next</button>`;
+  const prevButtonHTML = `<button id="tooltip-helper-prev-sequence" class="tooltip-helper-prev-sequence mt-2">Previous</button>`;
+
+  const nextButtonHTML = `<button id="tooltip-helper-next-sequence" class="tooltip-helper-next-sequence mt-2 ml-2">Next</button>`;
 
   const offset = 10;
   var sequenceIndex = 0;
 
-  const createStage = (sequence) => {
+  const createStage = (sequence, originalSequence) => {
     const { element, description } = sequence;
     const backdrop = getElementById("tooltip-helper-backdrop");
-    backdrop.removeChild(backdrop.firstChild);
 
     let elem = getElement(element);
+    if (!elem) return endSequence();
+    elem.scrollIntoView({ behaviour: 'smooth', block: 'center' });
     let styles = getComputedStyle(elem);
     let elemBoundaries = elem.getBoundingClientRect();
+    let position = {
+      x: elemBoundaries.left,
+      y: elemBoundaries.top + elemBoundaries.height + offset
+    };
 
-    let activeElement = document.createElement("div");
-    activeElement.classList.add("tooltip-helper-active");
+    let activeElement = getElement("#tooltip-helper-backdrop .tooltip-helper-active");
+    if (!activeElement) {
+      activeElement = document.createElement("div");
+      activeElement.classList.add("tooltip-helper-active");
+      backdrop.append(activeElement);
+    }
     activeElement.style.top = elemBoundaries.top + "px";
     activeElement.style.left = elemBoundaries.left + "px";
     activeElement.style.height = elemBoundaries.height + "px";
     activeElement.style.width = elemBoundaries.width + "px";
     activeElement.style.borderRadius = styles.borderRadius;
 
-    let descriptionElement = document.createElement("div");
-    descriptionElement.classList.add("tooltip-helper-active-description");
-    descriptionElement.style.left = elemBoundaries.left + "px";
-    descriptionElement.style.top = elemBoundaries.top + elemBoundaries.height + offset + "px";
-    descriptionElement.style.zIndex = 999;
-    descriptionElement.innerHTML = "<p class='m-0'>" + description + "</p>";
-    descriptionElement.innerHTML += nextButtonHTML;
-
-    let wrapperElement = document.createElement("div");
-    wrapperElement.append(activeElement);
-    wrapperElement.append(descriptionElement);
-
-    backdrop.append(wrapperElement);
+    let descriptionElement = getElement("#tooltip-helper-backdrop .tooltip-helper-active-description");
+    if (!descriptionElement) {
+      descriptionElement = document.createElement("div");
+      descriptionElement.classList.add("tooltip-helper-active-description");
+      descriptionElement.innerHTML += "<p id='tooltip-helper-active-description-text' class='m-0'>" + description + "</p>";
+      descriptionElement.innerHTML += prevButtonHTML;
+      descriptionElement.innerHTML += nextButtonHTML;
+      backdrop.append(descriptionElement);
+    }
+    const prevBtn = getElementById("tooltip-helper-prev-sequence");
+    const nextBtn = getElementById("tooltip-helper-next-sequence");
+    if (sequenceIndex === 0) { 
+      prevBtn.setAttribute('disabled', true);
+      prevBtn.classList.add("tooltip-disabled-btn");
+      nextBtn.innerText = "Next";
+    } else {
+      prevBtn.removeAttribute('disabled', true);
+      prevBtn.classList.remove("tooltip-disabled-btn");
+      if (sequenceIndex === originalSequence.length - 1) {
+        nextBtn.innerText = "Finish";
+      } else {
+        nextBtn.innerText = "Next";
+      }
+    }
+    descriptionElement.style.transform = "translateX(" + position.x + "px) translateY(" + position.y + "px)";
+    getElementById("tooltip-helper-active-description-text").innerHTML = description;
   };
 
   const startSequence = (sequence) => {
     let currentSequence = sequence[sequenceIndex];
-    getElementById("tooltip-helper-backdrop").style.background = "transparent";
-    return createStage(currentSequence);
+    const backdrop = getElementById("tooltip-helper-backdrop");
+    backdrop.style.background = "transparent";
+    backdrop.removeChild(backdrop.firstChild);
+    return createStage(currentSequence, sequence);
   };
 
   const endSequence = () => {
     getElementById("tooltip-helper-backdrop").style.background = "transparent";
     const element = getElementById("tooltip-helper-backdrop");
     element.parentNode.removeChild(element);
+  };
+
+  const next = (sequence) => {
+    sequenceIndex += 1;
+    if (sequenceIndex <= sequence.length - 1) {
+      return createStage(sequence[sequenceIndex], sequence);
+    } else {
+      getElement(sequence[sequenceIndex - 1].element).classList.remove("tooltip-helper-active-element");
+      getElementById("tooltip-helper-backdrop").removeEventListener("click", function(e) {});
+      endSequence();
+      return;
+    }
+  };
+
+  const prev = (sequence) => {
+    sequenceIndex -= 1;
+    if (sequenceIndex >= 0) {
+      return createStage(sequence[sequenceIndex], sequence);
+    } else {
+      getElement(sequence[sequenceIndex + 1].element).classList.remove("tooltip-helper-active-element");
+      getElementById("tooltip-helper-backdrop").removeEventListener("click", function(e) {});
+      endSequence();
+      return;
+    }
   };
 
   const createSequence = (data) => {
@@ -71,25 +121,17 @@ var bundle = (function () {
     getElementById("tour-desc").innerText = welcomeText;
     getElementById("tooltip-helper-confirmation-yes").innerText = confirmText;
     getElementById("tooltip-helper-confirmation-no").innerText = cancelText;
-    getElementById("tooltip-helper-confirmation-yes").addEventListener("click", startSequence.bind(window, sequence));
-    getElementById("tooltip-helper-confirmation-no").addEventListener("click", endSequence);
-    getElement('body').addEventListener("click", function (e) {
-      if (e.target.id === "tooltip-helper-next-sequence") {
-        sequenceIndex += 1;
-        if (sequenceIndex <= sequence.length - 1) {
-          return createStage(sequence[sequenceIndex]);
-        } else {
-          getElement(sequence[sequenceIndex - 1].element).classList.remove("tooltip-helper-active-element");
-          endSequence();
-          getElement("body").removeEventListener("click", function(e) {});
-          return;
-        }
+    getElementById("tooltip-helper-backdrop").addEventListener("click", (e) => {
+      switch(e.target.id) {
+        case 'tooltip-helper-confirmation-yes': return startSequence(sequence);
+        case 'tooltip-helper-next-sequence': return next(sequence);
+        case 'tooltip-helper-prev-sequence': return prev(sequence);
+        case 'tooltip-helper-confirmation-no': return endSequence();
+        default: return;
       }
     });
   };
 
-  var index = { createSequence };
-
-  return index;
+  return createSequence;
 
 }());
