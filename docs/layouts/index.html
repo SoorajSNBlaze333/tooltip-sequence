@@ -5,4 +5,25 @@
   <p class="text-base md:text-lg text-gray-600 mb-5">{{ .Site.Params.description }}</p>
 </section>
 
+<script>
+  const options = {
+    welcomeText: "Let us take you on a quick tour of the page!",
+    confirmText: "Let's start",
+    cancelText: "Maybe later",
+    sequence: [{
+      element: '#brand-name',
+      description: 'This is the brand name of the App.'
+    }, {
+      element: '#home-nav',
+      description: 'Click here to go to Home page'
+    }, {
+      element: '#edit-profile',
+      description: 'This is the edit profile button'
+    }]
+  };
+  window.addEventListener("DOMContentLoaded", function() {
+    createSequence(options);
+  });
+</script>
+
 {{ end }}

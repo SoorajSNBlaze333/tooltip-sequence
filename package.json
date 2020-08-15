@@ -6,7 +6,8 @@
   "author": "",
   "license": "MIT",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "keywords": [
     "UI",
