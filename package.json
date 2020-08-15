@@ -22,8 +22,8 @@
     "url": "https://github.com/SoorajSNBlaze333/tooltip-sequence"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development concurrently \"cd docs && hugo server --disableFastRender\" \"rollup -w --config docs/rollup.config.js --context window\"",
-    "production": "cross-env NODE_ENV=production rollup --compact -c --context window && cd docs && hugo --minify"
+    "start": "cross-env NODE_ENV=development concurrently \"cd docs && hugo server --disableFastRender\" \"rollup -w --config docs/rollup.config.js --context window --name createSequence\"",
+    "production": "cross-env NODE_ENV=production rollup --compact -c --context window --name createSequence && cd docs && hugo --minify"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
