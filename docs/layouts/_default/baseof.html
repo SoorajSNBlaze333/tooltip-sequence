@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title itemprop="name">{{ .Title }}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="/main.css" />
-    <script src="/main.js"></script>
-    <!-- <link rel="stylesheet" href="https://unpkg.com/tooltip-sequence@0.2.0/dist/index.css">
-    <script src="https://unpkg.com/tooltip-sequence@0.2.0/dist/index.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="/main.css" />
+    <script src="/main.js"></script> -->
+    <link rel="stylesheet" href="https://unpkg.com/tooltip-sequence@0.2.2/dist/index.css">
+    <script src="https://unpkg.com/tooltip-sequence@0.2.2/dist/index.min.js"></script>
   </head>
-  <body class="bg-white">
-    <main class="container mx-auto my-12 px-3 md:px-1" id="main">
+  <body class="bg-white" style="height: 100vh; width: 100vw; margin: 0; padding: 0">
+    <main class="container-fluid h-100 w-100 p-0 m-0" id="main">
       {{ block "main" . }}{{ end }}
     </main>
   </body>

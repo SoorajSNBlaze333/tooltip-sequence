@@ -23,6 +23,7 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development concurrently \"cd docs && hugo server --disableFastRender\" \"rollup -w --config docs/rollup.config.js --context window --name createSequence\"",
+    "test": "cross-env NODE_ENV=development concurrently \"cd docs && hugo server --bind 0.0.0.0 --baseURL http://192.168.0.102:1313 --disableFastRender\" \"rollup -w --config docs/rollup.config.js --context window --name createSequence\"",
     "production": "cross-env NODE_ENV=production rollup --compact -c --context window --name createSequence && cd docs && hugo --minify"
   },
   "devDependencies": {

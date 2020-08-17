@@ -8,16 +8,16 @@ const confirmationHTML = `<div id="tooltip-helper-confirmation" class="tooltip-h
   </div>
 </div>`;
 
-const prevButtonHTML = `<button id="tooltip-helper-prev-sequence" class="tooltip-helper-prev-sequence mt-2">Previous</button>`;
-
-const nextButtonHTML = `<button id="tooltip-helper-next-sequence" class="tooltip-helper-next-sequence mt-2 ml-2">Next</button>`;
-
-const closeButtonHTML = `<button id="tooltip-helper-end-sequence" class="tooltip-helper-end-sequence">Quit</button>`;
+const footerHTML = `<div class="tooltip-helper-footer mt-2">
+  <button id="tooltip-helper-end-sequence" class="tooltip-helper-end-sequence">Quit</button>
+  <div>
+    <button id="tooltip-helper-prev-sequence" class="tooltip-helper-prev-sequence">Previous</button>
+    <button id="tooltip-helper-next-sequence" class="tooltip-helper-next-sequence ml-2">Next</button>
+  </div>
+</div>`;
 
 export {
   backdropHTML,
   confirmationHTML,
-  closeButtonHTML,
-  prevButtonHTML,
-  nextButtonHTML
+  footerHTML
 }

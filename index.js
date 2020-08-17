@@ -1,5 +1,5 @@
 import { getElementById, getElement } from './src/utils/helpers';
-import { backdropHTML, nextButtonHTML, prevButtonHTML, confirmationHTML, closeButtonHTML } from './src/utils/constants';
+import { backdropHTML, confirmationHTML, footerHTML } from './src/utils/constants';
 
 const offset = 10;
 var sequenceIndex = 0;
@@ -15,8 +15,8 @@ const createStage = (sequence, originalSequence) => {
   let styles = getComputedStyle(elem);
   let elemBoundaries = elem.getBoundingClientRect();
   let position = {
-    x: elemBoundaries.left,
-    y: elemBoundaries.top + elemBoundaries.height + offset
+    x: elemBoundaries.left < offset ? offset : Math.round(elemBoundaries.left),
+    y: Math.round(elemBoundaries.top + elemBoundaries.height + offset)
   }
 
   let activeElement = getElement("#tooltip-helper-backdrop .tooltip-helper-active");
@@ -25,8 +25,8 @@ const createStage = (sequence, originalSequence) => {
     activeElement.classList.add("tooltip-helper-active");
     backdrop.append(activeElement);
   }
-  activeElement.style.top = elemBoundaries.top + "px";
-  activeElement.style.left = elemBoundaries.left + "px";
+  activeElement.style.top = Math.round(elemBoundaries.top) + "px";
+  activeElement.style.left = Math.round(elemBoundaries.left) + "px";
   activeElement.style.height = elemBoundaries.height + "px";
   activeElement.style.width = elemBoundaries.width + "px";
   activeElement.style.borderRadius = styles.borderRadius;
@@ -34,11 +34,10 @@ const createStage = (sequence, originalSequence) => {
   let descriptionElement = getElement("#tooltip-helper-backdrop .tooltip-helper-active-description");
   if (!descriptionElement) {
     descriptionElement = document.createElement("div");
+    descriptionElement.style.willChange = "transform";
     descriptionElement.classList.add("tooltip-helper-active-description");
-    descriptionElement.innerHTML += closeButtonHTML;
-    descriptionElement.innerHTML += "<p id='tooltip-helper-active-description-text' class='mt-2 mb-2'>" + description + "</p>";
-    descriptionElement.innerHTML += prevButtonHTML;
-    descriptionElement.innerHTML += nextButtonHTML;
+    descriptionElement.innerHTML += "<p id='tooltip-helper-active-description-text' class='mt-2 mb-2'></p>";
+    descriptionElement.innerHTML += footerHTML;
     backdrop.append(descriptionElement);
   }
   const prevBtn = getElementById("tooltip-helper-prev-sequence");
@@ -56,8 +55,19 @@ const createStage = (sequence, originalSequence) => {
       nextBtn.innerText = "Next";
     }
   }
-  descriptionElement.style.transform = "translateX(" + position.x + "px) translateY(" + position.y + "px)";
   getElementById("tooltip-helper-active-description-text").innerHTML = description;
+  if (descriptionElement.offsetWidth <= window.innerWidth) {
+    descriptionElement.style.width = Math.round(window.innerWidth - (position.x * 2)) + "px";
+  } 
+  if (descriptionElement.offsetWidth + position.x > window.innerWidth) {
+    let offset = Math.round(window.innerWidth - Math.round(elemBoundaries.right));
+    let right =  Math.round(((descriptionElement.offsetWidth + position.x) - window.innerWidth) + offset);
+    position.x -= right;
+  }
+  if (descriptionElement.offsetHeight + position.y > window.innerHeight) {
+    position.y = Math.round((elemBoundaries.top - descriptionElement.offsetHeight) - offset);
+  }
+  descriptionElement.style.transform = "translate3d(" + position.x + "px, " + position.y + "px, 0px)";
 };
 
 const startSequence = (sequence) => {
@@ -70,9 +80,11 @@ const startSequence = (sequence) => {
 
 const endSequence = () => {
   getElement('body').classList.remove('stop-scroll');
-  getElementById("tooltip-helper-backdrop").style.background = "transparent";
   const element = getElementById("tooltip-helper-backdrop");
+  element.removeEventListener('click', function() {})
+  element.style.background = "transparent";
   element.parentNode.removeChild(element);
+  sequenceIndex = 0;
 };
 
 const next = (sequence) => {

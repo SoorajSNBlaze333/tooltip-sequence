@@ -1,174 +1,65 @@
 {{ define "main"}}
 
-<section class="w-full lg:w-8/12 xl:w-5/12 mx-auto py-20 md:py-32">
-  <p class="block md:hidden mb-3 text-gray-500 uppercase tracking-wide font-semibold text-xs">Welcome to Tooltip Sequence</p>
-  <p class="text-base md:text-lg text-gray-600 mb-5">{{ .Site.Params.description }}</p>
-
-  <article
-    class="prose max-w-full w-full md:w-4/5"
-    itemid="https://kutty.netlify.app/docs/"
-    itemscope=""
-    itemtype="http://schema.org/BlogPosting"
-  >
-    <h1 itemprop="headline" title="Installation &amp; Usage">
-      Installation &amp; Usage
-    </h1>
-    <p itemprop="description"></p>
-    <p>
-      Kutty is a tailwind plugin for building web applications. It has a set
-      of accessible and reusable components that are commonly used in web
-      applications.
-    </p>
-    <p>This plugin requires Tailwind CSS 1.4 or later.</p>
-    <h2 class="group" id="installation">
-      Installation
-      <a class="invisible group-hover:visible" href="#installation">#</a>
-    </h2>
-    <div class="highlight" id="install-step">
-      <pre
-        style="
-          background-color: #fff;
-          -moz-tab-size: 2;
-          -o-tab-size: 2;
-          tab-size: 2;
-        "
-      ><code class="language-sh" data-lang="sh">npm i kutty --save
-  </code></pre>
+<div class="row w-100 m-0">
+  <nav class="navbar navbar-light bg-dark w-100">
+    <a class="navbar-brand text-white" href="https://www.npmjs.com/package/tooltip-sequence">Tooltip Sequence <small>(version 0.2.1)</small></a>
+    <a href="https://github.com/SoorajSNBlaze333/tooltip-sequence" id="github-link" target="_blank" class="btn btn-dark"><span class="text-white">Github </span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+  </nav>
+</div>
+<div class="row w-100 m-0" style="height: calc(100vh - 56px);">
+  <div class="col-xs-6 col-sm-4 col-md-4 col-lg-2 col-xl-2 p-0">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><b>Features</b></li>
+      <li class="list-group-item" id="html-support"><small>HTML Support</small></li>
+      <li class="list-group-item" id="responsive"><small>Responsive widths on smaller screens</small></li>
+      <li class="list-group-item" id="scroll-to-element"><small>Scroll to element</small></li>
+      <li class="list-group-item" id="quit-btn"><small>Quit anywhere</small></li>
+      <li class="list-group-item d-flex justify-content-between align-items-center" id="callbacks"><small>Callback Events</small><span class="badge badge-info">coming soon</span></li>
+      <li class="list-group-item border-bottom d-flex justify-content-between align-items-center" id="triggers"><small>Triggers</small><span class="badge badge-info">coming soon</span></li>
+    </ul>
+  </div>
+  <div class="col-xs-6 col-sm-8 col-md-8 col-lg-10 col-xl-10 h-100 p-0">
+    <div class="p-3 h-100 border-left overflow-auto">
+      <h1>Welcome to tooltip-sequence</h1>
+      <div>A Sequential tooltip generator, that guides your users to new or existing features, by taking them on a tour across the features that you want them to see and be helped on.</div>
+      <div class="mt-3">To take a quick demo of the package/plugin, please click the button below</div>
+      <button id="demo-btn" onclick="return handleClick()" class="btn btn-dark mt-1">Demo</button>
+      <div class="mt-3">{{ .Content }}</div>
     </div>
-    <p>
-      Tailwind CSS is not included in this package. Learn how to
-      <a
-        id="widget-selector"
-        href="https://tailwindcss.com/docs/installation/"
-        target="_blank"
-        rel="noreferrer noopener"
-        >install tailwind here</a
-      >.
-    </p>
-    <h2 class="group" id="usage">
-      Usage <a class="invisible group-hover:visible" href="#usage">#</a>
-    </h2>
-    <h3 class="group" id="for-css">
-      For CSS <a class="invisible group-hover:visible" href="#for-css">#</a>
-    </h3>
-    <p>Require the installed plugin directly to your Tailwind config:</p>
-    <div class="highlight add-plugin">
-      <pre
-        style="
-          background-color: #fff;
-          -moz-tab-size: 2;
-          -o-tab-size: 2;
-          tab-size: 2;
-        "
-      ><code class="language-js" data-lang="js"><span style="color:#998;font-style:italic">// tailwind.config.js
-  </span><span style="color:#998;font-style:italic"></span>plugins<span style="color:#000;font-weight:700">:</span> [require(<span style="color:#d14">"kutty"</span>)],
-  </code></pre>
-    </div>
-    <h3 class="group" id="for-js">
-      For JS <a class="invisible group-hover:visible" href="#for-js">#</a>
-    </h3>
-    <p>Place the following script tag before the closing body tag:</p>
-    <div class="highlight"></div>
-    <h2 class="group" id="development">
-      Development
-      <a class="invisible group-hover:visible" href="#development">#</a>
-    </h2>
-    <p>
-      You need
-      <a href="https://gohugo.io/" target="_blank" rel="noreferrer noopener"
-        >Hugo</a
-      >
-      to run the dev server. If you have
-      <a href="https://brew.sh/" target="_blank" rel="noreferrer noopener"
-        >Homebrew</a
-      >
-      you can do the following:
-    </p>
-    <div class="highlight">
-      <pre
-        style="
-          background-color: #fff;
-          -moz-tab-size: 2;
-          -o-tab-size: 2;
-          tab-size: 2;
-        "
-      ><code class="language-sh" data-lang="sh">brew install hugo
-  </code></pre>
-    </div>
-    <p>
-      Check this
-      <a
-        href="https://gohugo.io/getting-started/installing/"
-        target="_blank"
-        rel="noreferrer noopener"
-        >Hugo installation page</a
-      >
-      for installing on other systems.
-    </p>
-    <p>
-      Then clone the repo, install dependencies, and start the server locally.
-    </p>
-    <div class="highlight">
-      <pre
-        style="
-          background-color: #fff;
-          -moz-tab-size: 2;
-          -o-tab-size: 2;
-          tab-size: 2;
-        "
-      ><code class="language-sh" data-lang="sh">git clone https://github.com/praveenjuge/kutty.git
-  <span style="color:#0086b3">cd</span> kutty
-  npm i
-  npm start
-  </code></pre>
-    </div>
-    <p>
-      Open
-      <a
-        href="http://localhost:1313"
-        target="_blank"
-        rel="noreferrer noopener"
-        ><code>http://localhost:1313</code></a
-      >
-      in your browser.
-    </p>
-    <table>
-      <thead>
-        <tr>
-          <th>Scripts</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>npm start</code></td>
-          <td>Starts a local Hugo server and Tailwind Watcher</td>
-        </tr>
-        <tr>
-          <td><code>npm run production</code></td>
-          <td>For generating production docs files</td>
-        </tr>
-      </tbody>
-    </table>
-  </article>
-</section>
+  </div>
+</div>
 
 <script>
   const options = {
-    welcomeText: "Let us take you on a quick tour of the page!",
-    confirmText: "Let's start",
-    cancelText: "Maybe later",
+    welcomeText: "This is a demo of the components in this page",
+    confirmText: "Start",
+    cancelText: "Later",
     sequence: [{
-      element: '#install-step',
-      description: 'Run this cli to install kutty.'
-    }, {
-      element: '.add-plugin',
-      description: 'Add kutty plugin to tailwind.'
+      element: '#html-support',
+      description: '<div><h3>HTML and Emoji in Descriptions 📝</h3><p>HTML and emoji description support.</p></div>'
+    },{
+      element: '#responsive',
+      description: '<div><h3>Mobile Responsive Width 📱</h3><p>Open this same page on your mobile and the tooltips would be adjusted to your screen size.</p></div>'
+    },{
+      element: '#scroll-to-element',
+      description: "<div><h3>Scrolls to the element ⏬</h3><p>You have a page that is long and scrollable, not to worry, the tooltip will automatically scroll you to the element.</p></div>"
+    },{
+      element: '#quit-btn',
+      description: "<div><h3>Quit from any step ❌</h3><p>Feel like you already know what's going on, end the sequence from any step with the 'Quit' button.</p></div>"
+    },{
+      element: '#callbacks',
+      description: "<div><h3 class='m-0'>Callback events ↩</h3><p>Callback events for load, iterate and complete.</p></div>"
+    },{
+      element: '#triggers',
+      description: "<div><h3 class='m-0'>Triggers 💥</h3><p>Trigger events when a tooltip is created on an element.</p></div>"
+    },{
+      element: '#github-link',
+      description: "<div>Hope you like this package. If you do, please make sure to star this repo and share it with people who need something like this. Thank you ❤️</div>"
     }]
   };
-  window.addEventListener("DOMContentLoaded", function() {
-    createSequence(options);
-  });
+  const handleClick = function() {
+    return createSequence(options);
+  };
 </script>
 
 {{ end }}
