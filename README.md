@@ -68,3 +68,5 @@ const options = {
 createSequence(options);
 ```
 <div style="font-weight: 200;">Infinite Customizations available. You can customize any element that is created by overriding the classes. Customizations are only limited by the creativity of the designer</div>
+
+<h2 style="margin-top: 10px; font-weight: 200;">Checkout the features and a live demo <a href="https://tooltip-sequence.netlify.app/">here</a></h2>
