@@ -7,7 +7,7 @@
   left: 0;
   overflow: hidden;
   transition-duration: 300ms;
-  z-index: 100;
+  z-index: 9999;
 }
 
 .tooltip-helper-confirmation {

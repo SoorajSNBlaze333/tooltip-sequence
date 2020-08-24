@@ -19,7 +19,7 @@ title: "Tooltip Sequence"
 
 <div class="mb-4 text-center">
   <div style="font-weight: 200;" class="mt-1 mb-2">To take a quick demo of the package/plugin, please click the button below</div>
-  <button id="demo-btn" onclick="return handleClick()" class="btn btn-dark mt-1">Demo</button>
+  <button id="demo-btn" onclick="return handleClick(event)" class="btn btn-dark mt-1">Demo</button>
 </div>
 
 <div class="mt-3 mb-3">
@@ -78,6 +78,28 @@ const options = {
 createSequence(options);
 ```
 <div style="font-weight: 200;">Infinite Customizations available. You can customize any element that is created by overriding the classes. Customizations are only limited by the creativity of the designer</div>
+
+
+<h1 class="display-4 mt-3">Version 0.2.3 ~ Events are here</h1>
+
+<div class="dropdown" id="dropdown-trigger">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown button
+  </button>
+  <div id="dropdown-menu" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a id="dropdown-item-action" class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+  </div>
+</div>
+
+<button class="btn btn-dark mt-3" onclick="return handleEventsBtnClick(event)">Events Demo</button>
+
+
+
+
+
+
 
 ## Development
 

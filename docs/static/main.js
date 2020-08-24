@@ -26,7 +26,7 @@ var createSequence = (function () {
   var sequenceIndex = 0;
 
   const createStage = (sequence, originalSequence) => {
-    const { element, description } = sequence;
+    const { element, description, events } = sequence;
     const backdrop = getElementById("tooltip-helper-backdrop");
 
     let elem = getElement(element);
@@ -39,6 +39,7 @@ var createSequence = (function () {
       x: elemBoundaries.left < offset ? offset : Math.round(elemBoundaries.left),
       y: Math.round(elemBoundaries.top + elemBoundaries.height + offset)
     };
+    // eventBefore(sequence);
 
     let activeElement = getElement("#tooltip-helper-backdrop .tooltip-helper-active");
     if (!activeElement) {
@@ -66,7 +67,11 @@ var createSequence = (function () {
     if (sequenceIndex === 0) { 
       prevBtn.setAttribute('disabled', true);
       prevBtn.classList.add("tooltip-disabled-btn");
-      nextBtn.innerText = "Next";
+      if (originalSequence.length === 1) {
+        nextBtn.innerText = "Finish";
+      } else {
+        nextBtn.innerText = "Next";
+      }
     } else {
       prevBtn.removeAttribute('disabled', true);
       prevBtn.classList.remove("tooltip-disabled-btn");
@@ -89,7 +94,7 @@ var createSequence = (function () {
       position.y = Math.round((elemBoundaries.top - descriptionElement.offsetHeight) - offset);
     }
     descriptionElement.style.transform = "translate3d(" + position.x + "px, " + position.y + "px, 0px)";
-  };
+    if (events.hasOwnProperty('on')) { events.on(sequence); }};
 
   const startSequence = (sequence) => {
     let currentSequence = sequence[sequenceIndex];
@@ -108,7 +113,24 @@ var createSequence = (function () {
     sequenceIndex = 0;
   };
 
+  // const eventBefore = (currentSequence) => {
+  //   const { element, events } = currentSequence;
+  //   let elem = getElement(element);
+  //   if (elem && events) {
+  //     if (events.hasOwnProperty('before')) events.before();
+  //   }
+  // }
+
+  // const eventAfter = (prevSequence) => {
+  //   const { element, events } = prevSequence;
+  //   let elem = getElement(element);
+  //   if (elem && events) {
+  //     if (events.hasOwnProperty('after')) events.after();
+  //   }
+  // }
+
   const next = (sequence) => {
+    // eventAfter(sequence[sequenceIndex]);
     sequenceIndex += 1;
     if (sequenceIndex <= sequence.length - 1) {
       return createStage(sequence[sequenceIndex], sequence);
@@ -122,6 +144,7 @@ var createSequence = (function () {
 
   const prev = (sequence) => {
     sequenceIndex -= 1;
+    // eventBefore(sequence[sequenceIndex]);
     if (sequenceIndex >= 0) {
       return createStage(sequence[sequenceIndex], sequence);
     } else {
