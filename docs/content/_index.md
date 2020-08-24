@@ -78,3 +78,29 @@ const options = {
 createSequence(options);
 ```
 <div style="font-weight: 200;">Infinite Customizations available. You can customize any element that is created by overriding the classes. Customizations are only limited by the creativity of the designer</div>
+
+## Development
+
+You need [Hugo](https://gohugo.io/) to run the dev server. If you have [Homebrew](https://brew.sh/) you can do the following:
+
+```sh
+brew install hugo
+```
+
+Check this [Hugo installation page](https://gohugo.io/getting-started/installing/) for installing on other systems.
+
+Then clone the repo, install dependencies, and start the server locally.
+
+```sh
+git clone https://github.com/SoorajSNBlaze333/tooltip-sequence.git
+cd tooltip-sequence
+npm i
+npm start
+```
+
+Open [`http://localhost:1313`](http://localhost:1313) in your browser.
+
+| Scripts              | Description                          |
+| -------------------- | ------------------------------------ |
+| `npm start`          | Starts a local dev server            |
+| `npm run production` | For generating production docs files |
