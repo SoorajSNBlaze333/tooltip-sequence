@@ -5,7 +5,7 @@
   <a href="https://github.com/SoorajSNBlaze333/tooltip-sequence/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/SoorajSNBlaze333/tooltip-sequence" style="margin: 2px"></a>
   <a href="https://github.com/SoorajSNBlaze333/tooltip-sequence/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/SoorajSNBlaze333/tooltip-sequence" style="margin: 2px"></a>
   <a href="https://github.com/SoorajSNBlaze333/tooltip-sequence/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/SoorajSNBlaze333/tooltip-sequence" style="margin: 2px"></a>
-  <a href="#"><img alt="size" src="https://img.shields.io/badge/size-23kb-brightgreen" style="margin: 2px"></a>
+  <a href="#"><img alt="size" src="https://img.shields.io/badge/size-6kb-brightgreen" style="margin: 2px"></a>
 </div>
 
 <div style="margin: 10px 0px">

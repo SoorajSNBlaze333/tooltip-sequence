@@ -2,29 +2,25 @@
 
 <div class="row w-100 m-0">
   <nav class="navbar navbar-light bg-dark w-100">
-    <a class="navbar-brand text-white" href="https://www.npmjs.com/package/tooltip-sequence">Tooltip Sequence <small>(version 0.2.2)</small></a>
-    <a href="https://github.com/SoorajSNBlaze333/tooltip-sequence" id="github-link" target="_blank" class="btn btn-dark"><span class="text-white">Github </span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+    <a class="navbar-brand text-white" style="font-weight: 200;" href="https://www.npmjs.com/package/tooltip-sequence">Tooltip Sequence <span style="font-size: 13px; font-weight: 100;">(version 0.2.2)</span></a>
+    <a href="https://github.com/SoorajSNBlaze333/tooltip-sequence" id="github-link" target="_blank" class="btn btn-dark"><span class="text-white" style="font-weight: 200;">Github </span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
   </nav>
 </div>
 <div class="row w-100 m-0" style="height: calc(100vh - 56px);">
   <div class="col-xs-6 col-sm-4 col-md-4 col-lg-2 col-xl-2 p-0">
     <ul class="list-group list-group-flush">
-      <li class="list-group-item"><b>Features</b></li>
-      <li class="list-group-item" id="html-support"><small>HTML Support</small></li>
-      <li class="list-group-item" id="responsive"><small>Responsive widths on smaller screens</small></li>
-      <li class="list-group-item" id="scroll-to-element"><small>Scroll to element</small></li>
-      <li class="list-group-item" id="quit-btn"><small>Quit anywhere</small></li>
-      <li class="list-group-item d-flex justify-content-between align-items-center" id="callbacks"><small>Callback Events</small><span class="badge badge-info">coming soon</span></li>
-      <li class="list-group-item border-bottom d-flex justify-content-between align-items-center" id="triggers"><small>Triggers</small><span class="badge badge-info">coming soon</span></li>
+      <li class="list-group-item"><h4 style="font-weight: 200;">Features</h4></li>
+      <li class="list-group-item" id="html-support"><div style="font-size: 14px; font-weight: 200;">HTML Support</div></li>
+      <li class="list-group-item" id="responsive"><div style="font-size: 14px; font-weight: 200;">Responsive widths on smaller screens</div></li>
+      <li class="list-group-item" id="scroll-to-element"><div style="font-size: 14px; font-weight: 200;">Scroll to element</div></li>
+      <li class="list-group-item" id="quit-btn"><div style="font-size: 14px; font-weight: 200;">Quit Anywhere</div></li>
+      <li class="list-group-item d-flex justify-content-between align-items-center" id="callbacks"><div style="font-size: 14px; font-weight: 200;">Callback Events</div><span class="badge badge-info">coming soon</span></li>
+      <li class="list-group-item d-flex justify-content-between align-items-center border-bottom" id="keyboard-move"><div style="font-size: 14px; font-weight: 200;">Keyboard support</div><span class="badge badge-info">coming soon</span></li>
     </ul>
   </div>
   <div class="col-xs-6 col-sm-8 col-md-8 col-lg-10 col-xl-10 h-100 p-0">
-    <div class="p-3 h-100 border-left overflow-auto">
-      <h1>Welcome to tooltip-sequence</h1>
-      <div>A Sequential tooltip generator, that guides your users to new or existing features, by taking them on a tour across the features that you want them to see and be helped on.</div>
-      <div class="mt-3">To take a quick demo of the package/plugin, please click the button below</div>
-      <button id="demo-btn" onclick="return handleClick()" class="btn btn-dark mt-1">Demo</button>
-      <div class="mt-3">{{ .Content }}</div>
+    <div class="p-3 h-100 border-left overflow-auto">      
+      <div>{{ .Content }}</div>
     </div>
   </div>
 </div>
@@ -50,8 +46,20 @@
       element: '#callbacks',
       description: "<div><h3 class='m-0'>Callback events ↩</h3><p>Callback events for load, iterate and complete.</p></div>"
     },{
-      element: '#triggers',
-      description: "<div><h3 class='m-0'>Triggers 💥</h3><p>Trigger events when a tooltip is created on an element.</p></div>"
+      element: '#keyboard-move',
+      description: "<div><h3 class='m-0'>Keyboard Support ⌨️</h3><p>Arrow keys for moving across tooltips and other shortcuts.</p></div>"
+    },{
+      element: '#github-stars',
+      description: "<div>Thanks for all the support ❤️</div>"
+    },{
+      element: '#github-forks',
+      description: "<div>Thanks for all the forks ❤️</div>"
+    },{
+      element: '#github-issues',
+      description: "<div>Will try to resolve all issues ASAP ⚡️</div>"
+    },{
+      element: '#github-size',
+      description: "<div>On the process of reducing it even further.</div>"
     },{
       element: '#github-link',
       description: "<div>Hope you like this package. If you do, please make sure to star this repo and share it with people who need something like this. Thank you ❤️</div>"
