@@ -14,7 +14,7 @@ title: "Tooltip Sequence"
 </div>
 
 <div class="mt-3 text-center">
-  <img src="./cover.png" class="img-fluid w-100 rounded border" style="max-width: 900px" alt="cover"/>
+  <img id="test-img" src="./cover.png" class="img-fluid w-100 rounded border" style="max-width: 900px" alt="cover"/>
 </div>
 
 <div class="mb-4 text-center">
@@ -94,11 +94,6 @@ createSequence(options);
 </div>
 
 <button class="btn btn-dark mt-3" onclick="return handleEventsBtnClick(event)">Events Demo</button>
-
-
-
-
-
 
 
 ## Development

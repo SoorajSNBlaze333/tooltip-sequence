@@ -8,7 +8,7 @@ const confirmationHTML = `<div id="tooltip-helper-confirmation" class="tooltip-h
   </div>
 </div>`;
 
-const footerHTML = `<div class="tooltip-helper-footer mt-2">
+const footerHTML = `<div class="tooltip-helper-footer">
   <button id="tooltip-helper-end-sequence" class="tooltip-helper-end-sequence">Quit</button>
   <div>
     <button id="tooltip-helper-prev-sequence" class="tooltip-helper-prev-sequence">Previous</button>

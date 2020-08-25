@@ -1,11 +1,11 @@
-import { getElementById, getElement } from './src/utils/helpers';
+import { getElementById, getElement, calculateCenter, calculatePositions, calculateArrowPosition } from './src/utils/helpers';
 import { backdropHTML, confirmationHTML, footerHTML } from './src/utils/constants';
 
-const offset = 10;
 var sequenceIndex = 0;
+var backdropFade = "#1b1b1b8e";
 
 const createStage = (sequence, originalSequence) => {
-  const { element, description, events } = sequence;
+  const { element, description } = sequence;
   const backdrop = getElementById("tooltip-helper-backdrop");
 
   let elem = getElement(element);
@@ -14,11 +14,8 @@ const createStage = (sequence, originalSequence) => {
   elem.scrollIntoView({ behaviour: 'smooth', block: 'center' });
   let styles = getComputedStyle(elem);
   let elemBoundaries = elem.getBoundingClientRect();
-  let position = {
-    x: elemBoundaries.left < offset ? offset : Math.round(elemBoundaries.left),
-    y: Math.round(elemBoundaries.top + elemBoundaries.height + offset)
-  }
-  // eventBefore(sequence);
+  let position = { x: 0, y: 0 };
+  let arrowPosition = { x: 0, y: 0 };
 
   let activeElement = getElement("#tooltip-helper-backdrop .tooltip-helper-active");
   if (!activeElement) {
@@ -31,13 +28,14 @@ const createStage = (sequence, originalSequence) => {
   activeElement.style.height = elemBoundaries.height + "px";
   activeElement.style.width = elemBoundaries.width + "px";
   activeElement.style.borderRadius = styles.borderRadius;
+  activeElement.style.boxShadow = "0 0 0 9999px " + backdropFade;
 
   let descriptionElement = getElement("#tooltip-helper-backdrop .tooltip-helper-active-description");
   if (!descriptionElement) {
     descriptionElement = document.createElement("div");
     descriptionElement.style.willChange = "transform";
     descriptionElement.classList.add("tooltip-helper-active-description");
-    descriptionElement.innerHTML += "<p id='tooltip-helper-active-description-text' class='mt-2 mb-2'></p>";
+    descriptionElement.innerHTML += "<p id='tooltip-helper-active-description-text'></p>";
     descriptionElement.innerHTML += footerHTML;
     backdrop.append(descriptionElement);
   }
@@ -61,19 +59,37 @@ const createStage = (sequence, originalSequence) => {
     }
   }
   getElementById("tooltip-helper-active-description-text").innerHTML = description;
-  if (descriptionElement.offsetWidth <= window.innerWidth) {
-    descriptionElement.style.width = Math.round(window.innerWidth - (position.x * 2)) + "px";
-  } 
-  if (descriptionElement.offsetWidth + position.x > window.innerWidth) {
-    let offset = Math.round(window.innerWidth - Math.round(elemBoundaries.right));
-    let right =  Math.round(((descriptionElement.offsetWidth + position.x) - window.innerWidth) + offset);
-    position.x -= right;
+
+  let arrowElement = getElement("#tooltip-helper-backdrop #tooltip-helper-arrow");
+  if (!arrowElement) {
+    arrowElement = document.createElement("div");
+    arrowElement.setAttribute("id", "tooltip-helper-arrow");
+    backdrop.append(arrowElement);
   }
-  if (descriptionElement.offsetHeight + position.y > window.innerHeight) {
-    position.y = Math.round((elemBoundaries.top - descriptionElement.offsetHeight) - offset);
+
+  let placement;
+  if (sequence.hasOwnProperty('placement')) {
+    placement = sequence.placement;
+  } else {
+    placement = 'bottom-center';
   }
+  position = calculatePositions(elem, activeElement, descriptionElement, placement);
+  
+  let desc = descriptionElement.getBoundingClientRect();
+  if (position.x + desc.width >= window.innerWidth) {
+    position.x = Math.round(elemBoundaries.right - desc.width);
+  } else if (position.x <= 0) {
+    position.x = Math.round(elemBoundaries.x);
+    if (desc.width >= window.innerWidth) {
+      descriptionElement.style.width = (window.innerWidth - (position.x * 2)) + "px";
+    }
+  }
+
   descriptionElement.style.transform = "translate3d(" + position.x + "px, " + position.y + "px, 0px)";
-  if (events.hasOwnProperty('on')) { events.on(sequence) };
+  arrowPosition = calculateArrowPosition(arrowElement, placement, position, activeElement, descriptionElement);
+  arrowElement.style.transform = "translate3d(" + arrowPosition.x + "px, " + arrowPosition.y + "px, 0px)";
+
+  if (sequence.hasOwnProperty('events') && events.hasOwnProperty('on')) { events.on(sequence) };
 };
 
 const startSequence = (sequence) => {
@@ -92,22 +108,6 @@ const endSequence = () => {
   element.parentNode.removeChild(element);
   sequenceIndex = 0;
 };
-
-// const eventBefore = (currentSequence) => {
-//   const { element, events } = currentSequence;
-//   let elem = getElement(element);
-//   if (elem && events) {
-//     if (events.hasOwnProperty('before')) events.before();
-//   }
-// }
-
-// const eventAfter = (prevSequence) => {
-//   const { element, events } = prevSequence;
-//   let elem = getElement(element);
-//   if (elem && events) {
-//     if (events.hasOwnProperty('after')) events.after();
-//   }
-// }
 
 const next = (sequence) => {
   // eventAfter(sequence[sequenceIndex]);
@@ -137,7 +137,7 @@ const prev = (sequence) => {
 
 const createSequence = (data) => {
   const { welcomeText, confirmText, cancelText, sequence } = data;
-
+  if (data.hasOwnProperty('backdropColor')) backdropFade = data.backdropColor;
   getElement("body").innerHTML += backdropHTML;
   getElementById("tooltip-helper-backdrop").innerHTML = confirmationHTML;
   getElementById("tour-desc").innerText = welcomeText;
