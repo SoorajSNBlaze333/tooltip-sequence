@@ -94,8 +94,7 @@ const footerHTML = `<div class="tooltip-helper-footer">
     <button id="tooltip-helper-prev-sequence" class="tooltip-helper-prev-sequence">Previous</button>
     <button id="tooltip-helper-next-sequence" class="tooltip-helper-next-sequence ml-2">Next</button>
   </div>
-</div>`;// global options
-var sequenceIndex = 0;
+</div>`;var sequenceIndex = 0;
 var tooltipData = {
   welcomeText: "Do you want to take the tour of the page?",
   confirmText: "Yes",
@@ -104,7 +103,6 @@ var tooltipData = {
   sequence: [],
   onComplete: function() {}
 };
-
 const createActiveElement = (backdrop, elemBoundaries, styles) => {
   const { backdropColor } = tooltipData;
   let activeElement = getElement("#tooltip-helper-backdrop .tooltip-helper-active");
@@ -121,7 +119,6 @@ const createActiveElement = (backdrop, elemBoundaries, styles) => {
   activeElement.style.boxShadow = "0 0 0 9999px " + backdropColor;
   return activeElement;
 };
-
 const createDescriptionElement = (backdrop, description) => {
   const { sequence } = tooltipData;
   let descriptionElement = getElement("#tooltip-helper-backdrop .tooltip-helper-active-description");
@@ -155,7 +152,6 @@ const createDescriptionElement = (backdrop, description) => {
   getElementById("tooltip-helper-active-description-text").innerHTML = description;
   return descriptionElement;
 };
-
 const createArrowElement = (backdrop) => {
   let arrowElement = getElement("#tooltip-helper-backdrop #tooltip-helper-arrow");
   if (!arrowElement) {
@@ -165,7 +161,6 @@ const createArrowElement = (backdrop) => {
   }
   return arrowElement;
 };
-
 const createStage = () => {
   const { sequence } = tooltipData;
   const currentSequence = sequence[sequenceIndex];
@@ -201,7 +196,6 @@ const createStage = () => {
   arrowPosition = calculateArrowPosition(arrowElement, placement, position, activeElement, descriptionElement);
   arrowElement.style.transform = "translate3d(" + arrowPosition.x + "px, " + arrowPosition.y + "px, 0px)";
   if (sequence.hasOwnProperty('events') && events.hasOwnProperty('on')) { events.on(sequence); }};
-
 const endSequence = () => {
   getElement('body').classList.remove('stop-scroll');
   const element = getElementById("tooltip-helper-backdrop");
@@ -211,38 +205,23 @@ const endSequence = () => {
   sequenceIndex = 0;
   return tooltipData.onComplete()
 };
-
-const next = () => {
+const toggleSequence = (increment) => {
   const { sequence } = tooltipData;
-  sequenceIndex += 1;
-  if (sequenceIndex <= sequence.length - 1) {
+  sequenceIndex = sequenceIndex + increment;
+  if (equenceIndex >= 0 && sequenceIndex <= sequence.length - 1) {
     return createStage(sequence[sequenceIndex]);
   } else {
-    getElement(sequence[sequenceIndex - 1].element).classList.remove("tooltip-helper-active-element");
+    getElement(sequence[sequenceIndex - (1 * increment)].element).classList.remove("tooltip-helper-active-element");
     getElementById("tooltip-helper-backdrop").removeEventListener("click", function(e) {});
     endSequence();
     return;
   }
 };
-
-const prev = () => {
-  const { sequence } = tooltipData;
-  sequenceIndex -= 1;
-  if (sequenceIndex >= 0) {
-    return createStage(sequence[sequenceIndex]);
-  } else {
-    getElement(sequence[sequenceIndex + 1].element).classList.remove("tooltip-helper-active-element");
-    getElementById("tooltip-helper-backdrop").removeEventListener("click", function(e) {});
-    endSequence();
-    return;
-  }
-};
-
 const setupListeners = () => {
   getElementById("tooltip-helper-backdrop").addEventListener("click", (e) => {
     switch(e.target.id) {
-      case 'tooltip-helper-next-sequence': return next();
-      case 'tooltip-helper-prev-sequence': return prev();
+      case 'tooltip-helper-next-sequence': return toggleSequence(1);
+      case 'tooltip-helper-prev-sequence': return toggleSequence(-1);
       case 'tooltip-helper-end-sequence': 
       case 'tooltip-helper-confirmation-no': 
       case 'tooltip-helper-backdrop': return endSequence();
@@ -250,7 +229,6 @@ const setupListeners = () => {
     }
   });
 };
-
 const createSequence = (data) => {
   tooltipData = { ...tooltipData, ...data };
   getElement("body").innerHTML += backdropHTML;

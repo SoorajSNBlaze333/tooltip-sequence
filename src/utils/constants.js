@@ -1,13 +1,5 @@
 const backdropHTML = `<div id="tooltip-helper-backdrop" class="tooltip-helper-backdrop"></div>`;
 
-const confirmationHTML = `<div id="tooltip-helper-confirmation" class="tooltip-helper-confirmation">
-  <div id="tour-desc" class="tour-desc"></div>
-  <div class="tour-buttons">
-    <button id="tooltip-helper-confirmation-yes" class="tooltip-helper-confirmation-yes">Yes</button>
-    <button id="tooltip-helper-confirmation-no" class="tooltip-helper-confirmation-no">No</button>
-  </div>
-</div>`;
-
 const footerHTML = `<div class="tooltip-helper-footer">
   <button id="tooltip-helper-end-sequence" class="tooltip-helper-end-sequence">Quit</button>
   <div>
@@ -18,6 +10,5 @@ const footerHTML = `<div class="tooltip-helper-footer">
 
 export {
   backdropHTML,
-  confirmationHTML,
   footerHTML
 }

@@ -101,7 +101,6 @@ var createSequence = (function () {
   </div>
 </div>`;
 
-  // global options
   var sequenceIndex = 0;
   var tooltipData = {
     welcomeText: "Do you want to take the tour of the page?",
@@ -111,7 +110,6 @@ var createSequence = (function () {
     sequence: [],
     onComplete: function() {}
   };
-
   const createActiveElement = (backdrop, elemBoundaries, styles) => {
     const { backdropColor } = tooltipData;
     let activeElement = getElement("#tooltip-helper-backdrop .tooltip-helper-active");
@@ -128,7 +126,6 @@ var createSequence = (function () {
     activeElement.style.boxShadow = "0 0 0 9999px " + backdropColor;
     return activeElement;
   };
-
   const createDescriptionElement = (backdrop, description) => {
     const { sequence } = tooltipData;
     let descriptionElement = getElement("#tooltip-helper-backdrop .tooltip-helper-active-description");
@@ -162,7 +159,6 @@ var createSequence = (function () {
     getElementById("tooltip-helper-active-description-text").innerHTML = description;
     return descriptionElement;
   };
-
   const createArrowElement = (backdrop) => {
     let arrowElement = getElement("#tooltip-helper-backdrop #tooltip-helper-arrow");
     if (!arrowElement) {
@@ -172,7 +168,6 @@ var createSequence = (function () {
     }
     return arrowElement;
   };
-
   const createStage = () => {
     const { sequence } = tooltipData;
     const currentSequence = sequence[sequenceIndex];
@@ -208,7 +203,6 @@ var createSequence = (function () {
     arrowPosition = calculateArrowPosition(arrowElement, placement, position, activeElement, descriptionElement);
     arrowElement.style.transform = "translate3d(" + arrowPosition.x + "px, " + arrowPosition.y + "px, 0px)";
     if (sequence.hasOwnProperty('events') && events.hasOwnProperty('on')) { events.on(sequence); }};
-
   const endSequence = () => {
     getElement('body').classList.remove('stop-scroll');
     const element = getElementById("tooltip-helper-backdrop");
@@ -218,38 +212,23 @@ var createSequence = (function () {
     sequenceIndex = 0;
     return tooltipData.onComplete()
   };
-
-  const next = () => {
+  const toggleSequence = (increment) => {
     const { sequence } = tooltipData;
-    sequenceIndex += 1;
-    if (sequenceIndex <= sequence.length - 1) {
+    sequenceIndex = sequenceIndex + increment;
+    if (sequenceIndex >= 0 && sequenceIndex <= sequence.length - 1) {
       return createStage(sequence[sequenceIndex]);
     } else {
-      getElement(sequence[sequenceIndex - 1].element).classList.remove("tooltip-helper-active-element");
+      getElement(sequence[sequenceIndex - (1 * increment)].element).classList.remove("tooltip-helper-active-element");
       getElementById("tooltip-helper-backdrop").removeEventListener("click", function(e) {});
       endSequence();
       return;
     }
   };
-
-  const prev = () => {
-    const { sequence } = tooltipData;
-    sequenceIndex -= 1;
-    if (sequenceIndex >= 0) {
-      return createStage(sequence[sequenceIndex]);
-    } else {
-      getElement(sequence[sequenceIndex + 1].element).classList.remove("tooltip-helper-active-element");
-      getElementById("tooltip-helper-backdrop").removeEventListener("click", function(e) {});
-      endSequence();
-      return;
-    }
-  };
-
   const setupListeners = () => {
     getElementById("tooltip-helper-backdrop").addEventListener("click", (e) => {
       switch(e.target.id) {
-        case 'tooltip-helper-next-sequence': return next();
-        case 'tooltip-helper-prev-sequence': return prev();
+        case 'tooltip-helper-next-sequence': return toggleSequence(1);
+        case 'tooltip-helper-prev-sequence': return toggleSequence(-1);
         case 'tooltip-helper-end-sequence': 
         case 'tooltip-helper-confirmation-no': 
         case 'tooltip-helper-backdrop': return endSequence();
@@ -257,7 +236,6 @@ var createSequence = (function () {
       }
     });
   };
-
   const createSequence = (data) => {
     tooltipData = { ...tooltipData, ...data };
     getElement("body").innerHTML += backdropHTML;
