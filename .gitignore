@@ -1,4 +1,3 @@
-/data.txt
 node_modules
 .DS_Store
 package-lock.json
@@ -11,3 +10,4 @@ resources/*
 /resources/
 /resources/*
 docs/static/main.js
+docs/static/main.css

@@ -1,5 +1,6 @@
 import { getElementById, getElement, calculatePositions, calculateArrowPosition } from './src/utils/helpers';
-import { backdropHTML, footerHTML } from './src/utils/constants';
+const backdropHTML = `<div id="tooltip-helper-backdrop" class="tooltip-helper-backdrop"></div>`;
+const footerHTML = `<div class="tooltip-helper-footer"><button id="tooltip-helper-end-sequence" class="tooltip-helper-end-sequence">Quit</button><div><button id="tooltip-helper-prev-sequence" class="tooltip-helper-prev-sequence">Previous</button><button id="tooltip-helper-next-sequence" class="tooltip-helper-next-sequence ml-2">Next</button></div></div>`;
 var sequenceIndex = 0;
 var tooltipData = {
   welcomeText: "Do you want to take the tour of the page?",
@@ -14,6 +15,7 @@ const createActiveElement = (backdrop, elemBoundaries, styles) => {
   let activeElement = getElement("#tooltip-helper-backdrop .tooltip-helper-active");
   if (!activeElement) {
     activeElement = document.createElement("div");
+    activeElement.setAttribute("id", "tooltip-helper-active");
     activeElement.classList.add("tooltip-helper-active");
     backdrop.append(activeElement);
   }
@@ -87,7 +89,7 @@ const createStage = () => {
   let descriptionElement = createDescriptionElement(backdrop, description);
   let arrowElement = createArrowElement(backdrop);
 
-  position = calculatePositions(elem, activeElement, descriptionElement, placement);
+  position = calculatePositions(elem, descriptionElement, placement);
   
   let desc = descriptionElement.getBoundingClientRect();
   if (position.x + desc.width >= window.innerWidth) {
@@ -130,7 +132,7 @@ const setupListeners = () => {
       case 'tooltip-helper-next-sequence': return toggleSequence(1);
       case 'tooltip-helper-prev-sequence': return toggleSequence(-1);
       case 'tooltip-helper-end-sequence': 
-      case 'tooltip-helper-confirmation-no': 
+      case 'tooltip-helper-active': 
       case 'tooltip-helper-backdrop': return endSequence();
       default: return;
     }

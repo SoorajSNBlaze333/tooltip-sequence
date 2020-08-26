@@ -1,18 +1,15 @@
 var createSequence=(function(){'use strict';const offset = 15;
-
 const getElementById = (id) => document.getElementById(id);
 const getElement = (selector) => document.querySelector(selector);
-
 const calculatePositions = (element, active, description, placement) => {
   let elemBoundaries = element.getBoundingClientRect();
-  let activeBoundaries = active.getBoundingClientRect();
   let descBoundaries = description.getBoundingClientRect();
   let position = { x: 0, y: 0 };
+  let factor = descBoundaries.width > elemBoundaries.width ? -1 : 1;
+  const verticalX = Math.round(elemBoundaries.x + (factor * Math.abs(elemBoundaries.width - descBoundaries.width) / 2));
   switch(placement) {
     case 'top': {
-      position.x = descBoundaries.width > elemBoundaries.width
-      ? Math.round(elemBoundaries.x - Math.abs(elemBoundaries.width - descBoundaries.width) / 2)
-      : Math.round(elemBoundaries.x + Math.abs(elemBoundaries.width - descBoundaries.width) / 2);
+      position.x = verticalX;
       position.y = Math.round(elemBoundaries.y - descBoundaries.height - offset);
       break;
     }
@@ -22,9 +19,7 @@ const calculatePositions = (element, active, description, placement) => {
       break;
     }
     case 'bottom': {
-      position.x = descBoundaries.width > elemBoundaries.width
-      ? Math.round(elemBoundaries.x - Math.abs(elemBoundaries.width - descBoundaries.width) / 2)
-      : Math.round(elemBoundaries.x + Math.abs(elemBoundaries.width - descBoundaries.width) / 2);
+      position.x = verticalX;
       position.y = Math.round(elemBoundaries.y + elemBoundaries.height + offset);
       break;
     }
@@ -34,16 +29,13 @@ const calculatePositions = (element, active, description, placement) => {
       break;
     }
     default: {
-      position.x = descBoundaries.width > elemBoundaries.width
-      ? Math.round(elemBoundaries.x - Math.abs(elemBoundaries.width - descBoundaries.width) / 2)
-      : Math.round(elemBoundaries.x + Math.abs(elemBoundaries.width - descBoundaries.width) / 2);
+      position.x = verticalX;
       position.y = Math.round(elemBoundaries.y - descBoundaries.height - offset);
       break;
     }
   }
   return position;
 };
-
 const calculateArrowPosition = (element, placement, descPosition, active, description) => {
   let position = { x: 0, y: 0 };
   let activeBoundaries = active.getBoundingClientRect();
@@ -51,35 +43,35 @@ const calculateArrowPosition = (element, placement, descPosition, active, descri
   switch(placement) {
     case 'top':{
       element.removeAttribute('class');
-      element.classList.add('tooltip-helper-arrow-down');
+      element.classList.add('tooltip-helper-arrow', 'tooltip-helper-arrow-down');
       position.x = Math.round(activeBoundaries.x + (activeBoundaries.width / 2) - 20);
       position.y = Math.round(descPosition.y + descBoundaries.height - 10);
       break;
     }
     case 'right': {
       element.removeAttribute('class');
-      element.classList.add('tooltip-helper-arrow-left');
+      element.classList.add('tooltip-helper-arrow', 'tooltip-helper-arrow-left');
       position.x = Math.round(descPosition.x - 10);
       position.y = Math.round(activeBoundaries.y + (activeBoundaries.height / 2) - 20);
       break;
     }
     case 'bottom': {
       element.removeAttribute('class');
-      element.classList.add('tooltip-helper-arrow-up');
+      element.classList.add('tooltip-helper-arrow', 'tooltip-helper-arrow-up');
       position.x = Math.round(activeBoundaries.x + (activeBoundaries.width / 2) - 20);
       position.y = Math.round(descPosition.y - 10);
       break;
     }
     case 'left': {
       element.removeAttribute('class');
-      element.classList.add('tooltip-helper-arrow-right');
+      element.classList.add('tooltip-helper-arrow', 'tooltip-helper-arrow-right');
       position.x = Math.round(descPosition.x + descBoundaries.width - 10);
       position.y = Math.round(activeBoundaries.y + (activeBoundaries.height / 2) - 20);
       break;
     }
     default: {
       element.removeAttribute('class');
-      element.classList.add('tooltip-helper-arrow-up');
+      element.classList.add('tooltip-helper-arrow', 'tooltip-helper-arrow-up');
       position.x = Math.round(activeBoundaries.x + (activeBoundaries.width / 2) - 20);
       position.y = Math.round(descPosition.y - 10);
       break;
@@ -87,14 +79,8 @@ const calculateArrowPosition = (element, placement, descPosition, active, descri
   }
   return position;
 };const backdropHTML = `<div id="tooltip-helper-backdrop" class="tooltip-helper-backdrop"></div>`;
-
-const footerHTML = `<div class="tooltip-helper-footer">
-  <button id="tooltip-helper-end-sequence" class="tooltip-helper-end-sequence">Quit</button>
-  <div>
-    <button id="tooltip-helper-prev-sequence" class="tooltip-helper-prev-sequence">Previous</button>
-    <button id="tooltip-helper-next-sequence" class="tooltip-helper-next-sequence ml-2">Next</button>
-  </div>
-</div>`;var sequenceIndex = 0;
+const footerHTML = `<div class="tooltip-helper-footer"><button id="tooltip-helper-end-sequence" class="tooltip-helper-end-sequence">Quit</button><div><button id="tooltip-helper-prev-sequence" class="tooltip-helper-prev-sequence">Previous</button><button id="tooltip-helper-next-sequence" class="tooltip-helper-next-sequence ml-2">Next</button></div></div>`;
+var sequenceIndex = 0;
 var tooltipData = {
   welcomeText: "Do you want to take the tour of the page?",
   confirmText: "Yes",
@@ -208,7 +194,7 @@ const endSequence = () => {
 const toggleSequence = (increment) => {
   const { sequence } = tooltipData;
   sequenceIndex = sequenceIndex + increment;
-  if (equenceIndex >= 0 && sequenceIndex <= sequence.length - 1) {
+  if (sequenceIndex >= 0 && sequenceIndex <= sequence.length - 1) {
     return createStage(sequence[sequenceIndex]);
   } else {
     getElement(sequence[sequenceIndex - (1 * increment)].element).classList.remove("tooltip-helper-active-element");

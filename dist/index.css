@@ -1,27 +1,19 @@
+.stop-scroll {
+  overflow: hidden;
+  -webkit-overflow-scrolling: hidden;
+}
+
 .tooltip-helper-backdrop {
   height: 100vh;
   width: 100vw;
   position: fixed;
   top: 0;
   left: 0;
-  overflow: hidden;
-  transition-duration: 300ms;
   z-index: 9999;
-}
-
-.tooltip-helper-confirmation {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(36, 36, 36);
-  border-radius: 4px;
-  padding: 15px;
 }
 
 .tooltip-helper-active-description {
   background-color: rgb(36, 36, 36);
-  color: #fff;
   position: absolute;
   font-size: 15px;
   border-radius: 5px;
@@ -36,7 +28,7 @@
 }
 
 .tooltip-helper-active-description p {
-  font-size: 14px;
+  color: #fff;
   overflow-y: auto;
   height: 75%;
   padding: 10px;
@@ -51,6 +43,12 @@
   padding: 10px;
 }
 
+.tooltip-helper-footer > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .tooltip-helper-active {
   position: absolute;
   transition-duration: 150ms;
@@ -62,51 +60,6 @@
 .tooltip-helper-active-element {
   overflow: hidden;
   position: relative;
-}
-
-.tour-desc {
-  color: #fff;
-  font
-}
-
-.tour-buttons {
-  margin-top: 20px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.tooltip-helper-confirmation-yes {
-  background-color: rgb(233, 233, 233);
-  border: none;
-  border-radius: 2px;
-  margin-right: 10px;
-  outline: none;
-  padding: 3px 10px;
-}
-
-.tooltip-helper-confirmation-no {
-  background-color: rgb(189, 39, 39);
-  border: none;
-  border-radius: 2px;
-  outline: none;
-  padding: 3px 10px;
-  color: #fff;
-}
-
-.tooltip-helper-confirmation-yes:active,
-.tooltip-helper-confirmation-yes:focus,
-.tooltip-helper-confirmation-no:active,
-.tooltip-helper-confirmation-no:focus {
-  outline: none;
-}
-
-
-
-.tooltip-helper-footer > div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .tooltip-helper-next-sequence,
@@ -142,79 +95,38 @@
   color: rgba(255, 255, 255, 0.671);
 }
 
-.tooltip-helper-arrow-up {
+.tooltip-helper-arrow {
   position: absolute;
   width: 0; 
   height: 0; 
-  z-index: 9997;
+  z-index: 9997;  
+  transition-property: transform;
+  will-change: transform;
+  transform: translate3d(0px, 0px, 0px);
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.tooltip-helper-arrow-up {
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
   border-bottom: 20px solid rgb(36, 36, 36);
-  transition-property: transform;
-  will-change: transform;
-  transform: translate3d(0px, 0px, 0px);
-  transition-duration: 150ms;
-  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .tooltip-helper-arrow-down {
-  position: absolute;
-  width: 0; 
-  height: 0; 
-  z-index: 9997;
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
   border-top: 20px solid rgb(36, 36, 36);
-  transition-property: transform;
-  will-change: transform;
-  transform: translate3d(0px, 0px, 0px);
-  transition-duration: 150ms;
-  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .tooltip-helper-arrow-left {
-  position: absolute;
-  width: 0; 
-  height: 0; 
-  z-index: 9997;
   border-top: 20px solid transparent;
   border-bottom: 20px solid transparent;
   border-right: 20px solid rgb(36, 36, 36);
-  transition-property: transform;
-  will-change: transform;
-  transform: translate3d(0px, 0px, 0px);
-  transition-duration: 150ms;
-  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .tooltip-helper-arrow-right {
-  position: absolute;
-  width: 0; 
-  height: 0; 
-  z-index: 9997;
   border-top: 20px solid transparent;
   border-bottom: 20px solid transparent;
   border-left: 20px solid rgb(36, 36, 36);
-  transition-property: transform;
-  will-change: transform;
-  transform: translate3d(0px, 0px, 0px);
-  transition-duration: 150ms;
-  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-.mt-2 {
-  margin-top: 10px;
-}
-
-.mb-2 {
-  margin-bottom: 10px;
-}
-
-.ml-2 {
-  margin-left: 10px;
-}
-
-.stop-scroll {
-  overflow: hidden;
-  -webkit-overflow-scrolling: hidden;
 }
