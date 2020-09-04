@@ -1,7 +1,7 @@
 var createSequence=(function(){'use strict';const offset = 15;
 const getElementById = (id) => document.getElementById(id);
 const getElement = (selector) => document.querySelector(selector);
-const calculatePositions = (element, active, description, placement) => {
+const calculatePositions = (element, description, placement) => {
   let elemBoundaries = element.getBoundingClientRect();
   let descBoundaries = description.getBoundingClientRect();
   let position = { x: 0, y: 0 };
@@ -94,6 +94,7 @@ const createActiveElement = (backdrop, elemBoundaries, styles) => {
   let activeElement = getElement("#tooltip-helper-backdrop .tooltip-helper-active");
   if (!activeElement) {
     activeElement = document.createElement("div");
+    activeElement.setAttribute("id", "tooltip-helper-active");
     activeElement.classList.add("tooltip-helper-active");
     backdrop.append(activeElement);
   }
@@ -167,7 +168,7 @@ const createStage = () => {
   let descriptionElement = createDescriptionElement(backdrop, description);
   let arrowElement = createArrowElement(backdrop);
 
-  position = calculatePositions(elem, activeElement, descriptionElement, placement);
+  position = calculatePositions(elem, descriptionElement, placement);
   
   let desc = descriptionElement.getBoundingClientRect();
   if (position.x + desc.width >= window.innerWidth) {
@@ -181,7 +182,7 @@ const createStage = () => {
   descriptionElement.style.transform = "translate3d(" + position.x + "px, " + position.y + "px, 0px)";
   arrowPosition = calculateArrowPosition(arrowElement, placement, position, activeElement, descriptionElement);
   arrowElement.style.transform = "translate3d(" + arrowPosition.x + "px, " + arrowPosition.y + "px, 0px)";
-  if (sequence.hasOwnProperty('events') && events.hasOwnProperty('on')) { events.on(sequence); }};
+  if (sequence.hasOwnProperty('events') && sequence.events.hasOwnProperty('on')) { sequence.events.on(sequence); }};
 const endSequence = () => {
   getElement('body').classList.remove('stop-scroll');
   const element = getElementById("tooltip-helper-backdrop");
@@ -209,7 +210,7 @@ const setupListeners = () => {
       case 'tooltip-helper-next-sequence': return toggleSequence(1);
       case 'tooltip-helper-prev-sequence': return toggleSequence(-1);
       case 'tooltip-helper-end-sequence': 
-      case 'tooltip-helper-confirmation-no': 
+      case 'tooltip-helper-active': 
       case 'tooltip-helper-backdrop': return endSequence();
       default: return;
     }

@@ -161,11 +161,13 @@ var createSequence = (function () {
     let position = { x: 0, y: 0 };
     let arrowPosition = { x: 0, y: 0 };
     let placement = currentSequence.hasOwnProperty('placement') ? currentSequence.placement : 'bottom';
+    // let block = placement === 'bottom' ? 'start' : placement === 'top' ? 'end' : placement === 'left' || placement === 'right' ? 'center' : 'center';
+    let block = 'center';
 
     const elem = getElement(element);
     if (!elem) return endSequence();
     getElement('body').classList.add('stop-scroll');
-    elem.scrollIntoView({ behaviour: 'smooth', block: 'center' });
+    elem.scrollIntoView({ behaviour: 'smooth', block });
     let styles = getComputedStyle(elem);
     let elemBoundaries = elem.getBoundingClientRect();
 
@@ -177,9 +179,9 @@ var createSequence = (function () {
     
     let desc = descriptionElement.getBoundingClientRect();
     if (position.x + desc.width >= window.innerWidth) {
-      position.x = Math.round(elemBoundaries.right - desc.width);
+      position.x = Math.round(elemBoundaries.right - desc.width + 15);
     } else if (position.x <= 0) {
-      position.x = Math.round(elemBoundaries.x);
+      position.x = Math.round(elemBoundaries.x - 15);
       if (desc.width >= window.innerWidth) {
         descriptionElement.style.width = (window.innerWidth - (position.x * 2)) + "px";
       }
@@ -187,7 +189,7 @@ var createSequence = (function () {
     descriptionElement.style.transform = "translate3d(" + position.x + "px, " + position.y + "px, 0px)";
     arrowPosition = calculateArrowPosition(arrowElement, placement, position, activeElement, descriptionElement);
     arrowElement.style.transform = "translate3d(" + arrowPosition.x + "px, " + arrowPosition.y + "px, 0px)";
-    if (sequence.hasOwnProperty('events') && events.hasOwnProperty('on')) { events.on(sequence); }};
+    if (sequence.hasOwnProperty('events') && sequence.events.hasOwnProperty('on')) { sequence.events.on(sequence); }};
   const endSequence = () => {
     getElement('body').classList.remove('stop-scroll');
     const element = getElementById("tooltip-helper-backdrop");
