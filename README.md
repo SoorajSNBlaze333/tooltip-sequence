@@ -1,4 +1,4 @@
-<h1 style="width: 100%; text-align: center; font-weight: 200; margin-bottom: 10px">Tooltip Sequence</h2>
+# Tooltip Sequence
 A minimalistic set of tooltips on your app.
 
 <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
@@ -8,17 +8,12 @@ A minimalistic set of tooltips on your app.
   <a href="#"><img alt="size" src="https://img.shields.io/badge/size-7kb-brightgreen" style="margin: 2px"></a>
 </div>
 
-<div style="margin: 10px 0px">
-  <img src="./docs/static/cover.png" style="width: 100%" alt="cover"/>
-</div>
+<img src="./docs/static/cover.png" style="width: 100%" alt="cover"/>
 
-<div style="margin: 10px 0px">
-  <h2 style="font-weight: 200;">What it does</h2>
-  So suppose you create a Web Application and you want to take your users or anyone on a walkthrough on one, two or maybe all the features in your app, you can install this simple Javascript package to create a sequence of small tooltips that will guide the user to each feature( in our case a web element ) and show a small description of what you want them to know about that feature.This package would save you the time to manually create tooltip descriptions on each page and link them together in action.
-</div>
+## What it does
+So suppose you create a Web Application and you want to take your users or anyone on a walkthrough on one, two or maybe all the features in your app, you can install this simple Javascript package to create a sequence of small tooltips that will guide the user to each feature( in our case a web element ) and show a small description of what you want them to know about that feature.This package would save you the time to manually create tooltip descriptions on each page and link them together in action.
 
-<h2 style="margin: 10px 0px;font-weight: 200;">Installation</h2>
-
+## Installation
 
 <h3 style="font-weight: 100;">Quick Usage ⚡️</h3>
 <div style="font-size: 12px; font-weight: 200;">Add the following tags to your HTML document</div>
@@ -43,7 +38,7 @@ import createSequence from "tooltip-sequence";
 import "tooltip-sequence/dist/index.css";
 ```
 
-<h2 style="margin: 10px 0px;font-weight: 200;">Example</h2>
+## Example
 
 ```js
 const options = {
