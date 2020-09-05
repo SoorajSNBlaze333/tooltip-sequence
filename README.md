@@ -1,5 +1,5 @@
 <h1 style="width: 100%; text-align: center; font-weight: 200; margin-bottom: 10px">Tooltip Sequence</h2>
-<div style="text-align: center; font-size: 12px; margin-bottom: 15px; font-weight: 200">A minimalistic set of tooltips on your app.</div>
+A minimalistic set of tooltips on your app.
 
 <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
   <a href="https://github.com/SoorajSNBlaze333/tooltip-sequence/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/SoorajSNBlaze333/tooltip-sequence" style="margin: 2px"></a>
@@ -14,7 +14,7 @@
 
 <div style="margin: 10px 0px">
   <h2 style="font-weight: 200;">What it does</h2>
-  <div style="font-size: 12px; font-weight: 200;">So suppose you create a Web Application and you want to take your users or anyone on a walkthrough on one, two or maybe all the features in your app, you can install this simple Javascript package to create a sequence of small tooltips that will guide the user to each feature( in our case a web element ) and show a small description of what you want them to know about that feature.This package would save you the time to manually create tooltip descriptions on each page and link them together in action.</div>
+  So suppose you create a Web Application and you want to take your users or anyone on a walkthrough on one, two or maybe all the features in your app, you can install this simple Javascript package to create a sequence of small tooltips that will guide the user to each feature( in our case a web element ) and show a small description of what you want them to know about that feature.This package would save you the time to manually create tooltip descriptions on each page and link them together in action.
 </div>
 
 <h2 style="margin: 10px 0px;font-weight: 200;">Installation</h2>

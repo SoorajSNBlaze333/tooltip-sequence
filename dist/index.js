@@ -156,7 +156,7 @@ const createStage = () => {
   let position = { x: 0, y: 0 };
   let arrowPosition = { x: 0, y: 0 };
   let placement = currentSequence.hasOwnProperty('placement') ? currentSequence.placement : 'bottom';
-  // let block = placement === 'bottom' ? 'start' : placement === 'top' ? 'end' : placement === 'left' || placement === 'right' ? 'center' : 'center';
+  if (window.innerWidth <= 400 && (placement === 'left' || placement === 'right')) placement = 'bottom'; 
   let block = 'center';
 
   const elem = getElement(element);
