@@ -20,26 +20,31 @@
         <p class="m-0">c</p>
         <p id="e" class="m-0">e</p>
       </div>
-      <div class="w-100 d-flex justify-content-center align-items-center mb-2">
+      <div class="w-100 d-flex justify-content-center align-items-center mb-2 flex-wrap">
         <a href="https://github.com/SoorajSNBlaze333/tooltip-sequence/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/SoorajSNBlaze333/tooltip-sequence" style="margin: 2px"></a>
         <a href="https://github.com/SoorajSNBlaze333/tooltip-sequence/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/SoorajSNBlaze333/tooltip-sequence" style="margin: 2px"></a>
+        <a href="https://github.com/SoorajSNBlaze333/tooltip-sequence/network"><img alt="GitHub forks" src="https://img.shields.io/github/license/SoorajSNBlaze333/tooltip-sequence" style="margin: 2px"></a>
         <a href="#"><img alt="size" src="https://img.shields.io/badge/version-0.2.3-green" style="margin: 2px"></a>
-        <a href="#"><img alt="size" src="https://img.shields.io/badge/size-6kb-brightgreen" style="margin: 2px"></a>
+        <a href="#"><img alt="size" src="https://img.shields.io/badge/size-7kb-brightgreen" style="margin: 2px"></a>
       </div>
       <div class="d-flex justify-content-center align-items-center mb-2">
-        <a href="https://soorajsnair333.netlify.app" target="_blank" class="btn btn-sm btn-info mr-2">
+        <a href="https://soorajsnair333.netlify.app" target="_blank" class="btn btn-sm btn-info mr-2" id="website">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user mr-1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Sooraj</a>
-        <a href="https://github.com/SoorajSNBlaze333/tooltip-sequence" target="_blank" class="btn btn-sm btn-dark mr-2">
+        <a href="https://github.com/SoorajSNBlaze333/tooltip-sequence" target="_blank" class="btn btn-sm btn-dark mr-2" id="github">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github mr-1"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
           Github</a>
-        <a href="https://www.npmjs.com/package/tooltip-sequence" target="_blank" class="btn btn-sm btn-danger">
+        <a href="https://www.npmjs.com/package/tooltip-sequence" target="_blank" class="btn btn-sm btn-danger" id="npm">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-package mr-1"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>npm</a>
       </div>
-      <div class="d-flex flex-column bg-dark p-3 rounded text-white" style="font-size: 15px;">
+      <div class="bg-dark p-3 rounded text-white" style="font-size: 15px;">
+        <div class="m-0 mb-3" id="imports">
+          <div class="text-muted">import createSequence from "tooltip-sequence";</div>
+          <div class="text-muted">import "tooltip-sequence/dist/index.css";</div>
+        </div>
         <div class="m-0">
           <span style="color: orange">const</span><span class="ml-2">options</span><span class="ml-2 mr-2" style="color: orange">=</span><span>{</span>
         </div>
-        <div class="m-0 ml-4">
+        <div class="m-0 ml-4 d-inline" id="backdrop-color">
           <span style="color: yellowgreen">backdropColor</span><span class="mr-1">:</span><span style="color: yellowgreen">"transparent || color-code"</span><span>,</span>
         </div>
         <div class="m-0 ml-4">
@@ -51,17 +56,19 @@
         <div class="m-0 ml-5" style="max-width: 450px;">
           <span style="color: yellowgreen">description</span><span class="mr-1">:</span><span style="color: yellowgreen">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</span><span>,</span>
         </div>
-        <div class="m-0 ml-5">
+        <div class="m-0 ml-5 d-inline" id="placement">
           <span style="color: yellowgreen">placement</span><span class="mr-1">:</span><span style="color: yellowgreen">"top || right || bottom || left"</span>
         </div>
         <div class="m-0 ml-4">
           <span style="color: yellowgreen">}]</span><span>,</span>
         </div>
-        <div class="m-0 ml-4">
-          <span style="color: rgb(255, 217, 0);">onComplete</span><span class="mr-1">:</span><span style="color: orange">function</span><span>() {</span>
+        <div id="oncomplete">
+          <div class="m-0 ml-4">
+            <span style="color: rgb(255, 217, 0);">onComplete</span><span class="mr-1">:</span><span style="color: orange">function</span><span>() {</span>
+          </div>
+          <div class="m-0 ml-5 text-muted">// your code</div>
+          <div class="m-0 ml-4">}</div>
         </div>
-        <div class="m-0 ml-5 text-muted">// your code</div>
-        <div class="m-0 ml-4">}</div>
         <div class="m-0">};</div>
         <div class="m-0">
           <span style="color: rgb(255, 217, 0);">createSequence</span><span>(options);</span>
@@ -74,33 +81,49 @@
   </div>
 </div>
 
-<!-- <div class="h-100 w-100 m-0 d-flex justify-content-center align-items-center flex-column bg-dark">
-  <div class="card">
-    <div class="card-body p-5" style="box-shadow: 0px 0px 20px black;">
-      <h2>Change Log</h2>
-    </div>
-  </div>
-</div> -->
-
 
 <script>
   const options = {
     backdropColor: '#6262625d',
     sequence: [{
-      element: '#t',
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      element: '#imports',
+      description: "<h2>Don't forget to import!</h2><div>Add these lines when using in a front end framework.</div>",
       placement: 'bottom'
     }, {
-      element: '#i',
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      element: '#backdrop-color',
+      description: "<h2>Color, color, everywhere! ❤️🧡💛💚💙💜💗🖤</h2><div>Option to choose the backdrop color.</div>",
       placement: 'bottom'
     }, {
-      element: '#u',
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      element: '#placement',
+      description: "<h2>Placement - Top! ⬆️</h2><div>Option to place the tooltip on the top of the element.</div>",
+      placement: 'top'
+    }, {
+      element: '#placement',
+      description: "<h2>Placement - Right! ➡️</h2><div>Option to place the tooltip on the right of the element.</div>",
+      placement: 'right'
+    }, {
+      element: '#placement',
+      description: "<h2>Placement - Bottom! ⬇️</h2><div>Option to place the tooltip on the bottom of the element.</div>",
       placement: 'bottom'
     }, {
-      element: '#e',
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      element: '#placement',
+      description: "<h2>Placement - Left! ⬅️</h2><div>Option to place the tooltip on the left of the element.</div>",
+      placement: 'left'
+    }, {
+      element: '#oncomplete',
+      description: "<h2>Event Mode On! 🧨</h2><div>Callback event for completing the sequence.</div>",
+      placement: 'top'
+    }, {
+      element: '#website',
+      description: "<h2>Check me out!</h2><div><img style='height: 50px' src='./Sooraj.png'/>Check out my profile here.</div>",
+      placement: 'bottom'
+    }, {
+      element: '#github',
+      description: "<h2>Repository Link!</h2><div><img style='height: 50px' src='./Coding.png'/>Check out the source code here and leave a star please.</div>",
+      placement: 'bottom'
+    }, {
+      element: '#npm',
+      description: "<h2>Installation Package!</h2><div>To install via npm or use the cdn check out this.</div>",
       placement: 'bottom'
     }],
     onComplete: function() {

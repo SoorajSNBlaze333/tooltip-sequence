@@ -47,23 +47,15 @@ import "tooltip-sequence/dist/index.css";
 
 ```js
 const options = {
-  welcomeText: "Let us take you on a quick tour of the page!",
-  confirmText: "Let's start",
-  cancelText: "Maybe later",
-  sequence: [
-    {
-      element: "#brand-name",
-      description: "This is the brand name of the App.",
-    },
-    {
-      element: "#home-nav",
-      description: "<h2>Click here to go to Home page. <div>Home Page</div></h2>",
-    },
-    {
-      element: "#edit-profile",
-      description: "📝 This is the edit profile button",
-    },
-  ],
+  backdropColor:"transparent || color-code",
+  sequence:[{
+    element:"#element",
+    description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    placement:"top || right || bottom || left"
+  }],
+  onComplete:function() {
+    // your code
+  }
 };
 createSequence(options);
 ```
