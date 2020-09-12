@@ -58,8 +58,6 @@ createSequence(options);
 
 <h2 style="margin-top: 10px; font-weight: 200;">Checkout the features and a live demo <a href="https://tooltip-sequence.netlify.app/">here</a></h2>
 
-[![HitCount](http://hits.dwyl.com/SoorajSNBlaze333/tooltip-sequence.svg)](http://hits.dwyl.com/SoorajSNBlaze333/tooltip-sequence)
-
 ## Development
 
 You need [Hugo](https://gohugo.io/) to run the dev server. If you have [Homebrew](https://brew.sh/) you can do the following:
