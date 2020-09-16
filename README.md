@@ -10,6 +10,8 @@ A minimalistic set of tooltips on your app.
 
 <img src="./docs/static/cover.png" style="width: 100%" alt="cover"/>
 
+<img src="./docs/static/Demo.gif" style="width: 100%" alt="cover"/>
+
 ## What it does
 So suppose you create a Web Application and you want to take your users or anyone on a walkthrough on one, two or maybe all the features in your app, you can install this simple Javascript package to create a sequence of small tooltips that will guide the user to each feature( in our case a web element ) and show a small description of what you want them to know about that feature.This package would save you the time to manually create tooltip descriptions on each page and link them together in action.
 
