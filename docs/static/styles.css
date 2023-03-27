@@ -1,3 +1,8 @@
+html, 
+body {
+  font-size: 15px;
+}
+
 .title {
   font-size: 6rem;
   line-height: 1.2;

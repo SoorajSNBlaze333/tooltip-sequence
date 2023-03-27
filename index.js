@@ -151,8 +151,7 @@ class TooltipSequence {
     }
   };
   #createActive(backdrop, elemBoundaries, styles) {
-    function addStyles(element, classes) {
-      classes.split(' ').map(c => element.classList.add(c));
+    function addStyles(element) {
       element.style.height = elemBoundaries.height + "px";
       element.style.width = elemBoundaries.width + "px";
       element.style.backgroundColor = "transparent";
@@ -162,97 +161,101 @@ class TooltipSequence {
     }
     const { backdropColor } = this.#data;
     const activeElement = this.#getElement(`#${this.#references.backdrop} .${this.#references.active}`);
-    const html = this.#getElement(this.#data.sequence[this.#index].element).innerHTML;
     const targetEl = this.#getElement(this.#data.sequence[this.#index].element);
     if (!activeElement) {
       const activeElement = document.createElement("div");
       activeElement.setAttribute("id", this.#references.active);
       activeElement.classList.add(this.#references.active);
-      activeElement.innerHTML = html;
       backdrop.append(activeElement);
       return addStyles(activeElement, targetEl.className);
     }
-    activeElement.innerHTML = html;
+    activeElement.removeAttribute("class");
+    activeElement.classList.add(this.#references.active);
     return addStyles(activeElement, targetEl.className);
   };
   #createDescription(elem, backdrop, description, active, plcmt) {
-    let descriptionElement = this.#getElement(`#${this.#references.backdrop} .${this.#references.active_description}`);
-    let placement = plcmt;
-    if (!descriptionElement) {
-      descriptionElement = document.createElement("div");
-      descriptionElement.style.willChange = "transform";
-      descriptionElement.classList.add(this.#references.active_description);
-      descriptionElement.innerHTML += `<div class=${this.#references.header}>
-        <svg id=${this.#references.quit} class=${this.#references.quit} xmlns="http://www.w3.org/2000/svg" width="192" height="192" fill="#000000" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><circle cx="128" cy="128" r="96" fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="16"></circle><line x1="160" y1="96" x2="96" y2="160" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line><line x1="160" y1="160" x2="96" y2="96" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line></svg>
-      </div>`
-      descriptionElement.innerHTML += `<p id=${this.#references.active_description_text}></p>`;
-      descriptionElement.innerHTML += `<div class=${this.#references.footer}>
-        <button id=${this.#references.prev} class=${this.#references.prev}>${this.#references.prev_text}</button>
-        <div id=${this.#references.step_count} class=${this.#references.step_count}></div>
-        <button id=${this.#references.next} class=${this.#references.next}>${this.#references.next_text}</button>
-      </div>`;
-      backdrop.append(descriptionElement);
+    try {
+
+      let descriptionElement = this.#getElement(`#${this.#references.backdrop} .${this.#references.active_description}`);
+      let placement = plcmt;
+      if (!descriptionElement) {
+        descriptionElement = document.createElement("div");
+        descriptionElement.style.willChange = "transform";
+        descriptionElement.classList.add(this.#references.active_description);
+        descriptionElement.innerHTML += `<div class=${this.#references.header}>
+          <svg id=${this.#references.quit} class=${this.#references.quit} xmlns="http://www.w3.org/2000/svg" width="192" height="192" fill="#000000" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><circle cx="128" cy="128" r="96" fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="16"></circle><line x1="160" y1="96" x2="96" y2="160" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line><line x1="160" y1="160" x2="96" y2="96" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line></svg>
+        </div>`
+        descriptionElement.innerHTML += `<p id=${this.#references.active_description_text}></p>`;
+        descriptionElement.innerHTML += `<div class=${this.#references.footer}>
+          <button id=${this.#references.prev} class=${this.#references.prev}>${this.#references.prev_text}</button>
+          <div id=${this.#references.step_count} class=${this.#references.step_count}></div>
+          <button id=${this.#references.next} class=${this.#references.next}>${this.#references.next_text}</button>
+        </div>`;
+        backdrop.append(descriptionElement);
+      }
+      this.#updateButtons();
+  
+      const descTextElem = this.#getElement(`#${this.#references.active_description_text}`);
+      if (!descTextElem) return;
+      if (typeof description === "string") descTextElem.innerHTML = description;
+      else descTextElem.appendChild(description);
+  
+      const countElem = this.#getElementById(this.#references.step_count);
+      countElem.innerText = `${this.#index + 1} / ${this.#data.sequence.length}`;
+      
+      const descBoundaries = this.#getBoundingClientRect(descriptionElement);
+      const activeBoundaries = this.#getBoundingClientRect(active);
+      const elemBoundaries = this.#getBoundingClientRect(elem);
+  
+      const constraints = {
+        left: activeBoundaries.x,
+        right: window.innerWidth - (activeBoundaries.x + activeBoundaries.width)
+      }
+  
+      if (placement === 'top') {
+        descriptionElement.style.width = "100%";
+      } else if (placement === 'right' && constraints.right < descBoundaries.width) {
+        descriptionElement.style.height = "auto";
+        const newWidth = constraints.right - 20;
+        if (newWidth < 200) placement = 'bottom';
+        else descriptionElement.style.width = newWidth + "px";
+      } else if (placement === 'bottom') {
+        descriptionElement.style.width = "100%";
+      } else if (placement === 'left' && constraints.left - 40 < descBoundaries.width) {
+        descriptionElement.style.height = "auto";
+        const newWidth = constraints.right - 20;
+        if (newWidth < 200) placement = 'top';
+        else descriptionElement.style.width = newWidth + "px";
+      }
+  
+      // if (window.innerWidth < 480 && window.innerWidth > 20) { 
+      //   descriptionElement.style.width = window.innerWidth - 20 + "px";
+      // } else {
+      //   descriptionElement.style.width = "100%";
+      // }
+  
+      const descDimensions = getComputedStyle(descriptionElement);
+      const height = +descDimensions.getPropertyValue('height').replace('px', '');
+      const width = +descDimensions.getPropertyValue('width').replace('px', '');
+  
+      const position = { x: 0, y: 0 };
+      position.x = elemBoundaries.x + (elemBoundaries.width / 2) - (width / 2);
+      position.y = elemBoundaries.y + (elemBoundaries.height / 2) - (height / 2);
+  
+      if (placement === 'top') {
+        position.y = position.y - (height / 2) - 20;
+        const moveX = (width + position.x) - window.innerWidth;
+        if (moveX > 0) position.x = position.x - moveX;
+      }
+      else if (placement === 'right') position.x = position.x + (width / 2) + 45;
+      else if (placement === 'bottom') position.y = position.y + (height / 2) + 20;
+      else if (placement === 'left') position.x = position.x - (width / 2) - 45;
+  
+      descriptionElement.style.transform = "translate3d(" + position.x + "px, " + position.y + "px, 0px)";
+      return { descBoundaries, descriptionElement }
+    } catch (err) {
+      console.log(err);
     }
-    this.#updateButtons();
-
-    const descTextElem = this.#getElement(`#${this.#references.active_description_text}`);
-    if (!descTextElem) return;
-    if (typeof description === "string") descTextElem.innerHTML = description;
-    else descTextElem.appendChild(description);
-
-    const countElem = this.#getElementById(this.#references.step_count);
-    countElem.innerText = `${this.#index + 1} / ${this.#data.sequence.length}`;
-    
-    const descBoundaries = this.#getBoundingClientRect(descriptionElement);
-    const activeBoundaries = this.#getBoundingClientRect(active);
-    const elemBoundaries = this.#getBoundingClientRect(elem);
-
-    const constraints = {
-      left: activeBoundaries.x,
-      right: window.innerWidth - (activeBoundaries.x + activeBoundaries.width)
-    }
-
-    if (placement === 'top') {
-      descriptionElement.style.width = "100%";
-    } else if (placement === 'right' && constraints.right < descBoundaries.width) {
-      descriptionElement.style.height = "auto";
-      const newWidth = constraints.right - 20;
-      if (newWidth < 200) placement = 'bottom';
-      else descriptionElement.style.width = newWidth + "px";
-    } else if (placement === 'bottom') {
-      descriptionElement.style.width = "100%";
-    } else if (placement === 'left' && constraints.left - 40 < descBoundaries.width) {
-      descriptionElement.style.height = "auto";
-      const newWidth = constraints.right - 20;
-      if (newWidth < 200) placement = 'top';
-      else descriptionElement.style.width = newWidth + "px";
-    }
-
-    // if (window.innerWidth < 480 && window.innerWidth > 20) { 
-    //   descriptionElement.style.width = window.innerWidth - 20 + "px";
-    // } else {
-    //   descriptionElement.style.width = "100%";
-    // }
-
-    const descDimensions = getComputedStyle(descriptionElement);
-    const height = +descDimensions.getPropertyValue('height').replace('px', '');
-    const width = +descDimensions.getPropertyValue('width').replace('px', '');
-
-    const position = { x: 0, y: 0 };
-    position.x = elemBoundaries.x + (elemBoundaries.width / 2) - (width / 2);
-    position.y = elemBoundaries.y + (elemBoundaries.height / 2) - (height / 2);
-
-    if (placement === 'top') {
-      position.y = position.y - (height / 2) - 20;
-      const moveX = (width + position.x) - window.innerWidth;
-      if (moveX > 0) position.x = position.x - moveX;
-    }
-    else if (placement === 'right') position.x = position.x + (width / 2) + 45;
-    else if (placement === 'bottom') position.y = position.y + (height / 2) + 20;
-    else if (placement === 'left') position.x = position.x - (width / 2) - 45;
-
-    descriptionElement.style.transform = "translate3d(" + position.x + "px, " + position.y + "px, 0px)";
-    return { descBoundaries, descriptionElement }
   };
   // #renderArrow(description, newPlacement, desc) {
   //   let arrowElement = this.#getElement(`#${this.#references.backdrop} #${this.#references.arrow}`);
@@ -351,28 +354,32 @@ class TooltipSequence {
   };
   #renderSequenceStep() {
     // get the data from the sequence
-    const { element = null, description = "", placement = "bottom" } = this.#data.sequence[this.#index];
-    if (!element) return;
-
-    const backdrop = this.#backdropElement;
-    if (!backdrop) return;
-    let block = 'center';
-    let newPlacement = placement;
-    // for mobile devices
-    // if (window.innerWidth <= 480 && (placement === 'left' || placement === 'right')) newPlacement = 'bottom'; 
-
-    const elem = this.#getElement(element);
-    if (!elem) return this.end();
-    const body = this.#bodyElement;
-    if (!body) return;
-    body.classList.add(this.#references.stop_scroll);
-    elem.scrollIntoView({ behavior: 'smooth', block });
-
-    const styles = getComputedStyle(elem);
-    const elemBoundaries = this.#getBoundingClientRect(elem);
-    const activeElement = this.#createActive(backdrop, elemBoundaries, styles);
-    const { descriptionElement } = this.#createDescription(elem, backdrop, description, activeElement, newPlacement);
-    if (!descriptionElement) return; 
+    try {
+      const { element = null, description = "", placement = "bottom" } = this.#data.sequence[this.#index];
+      if (!element) return;
+  
+      const backdrop = this.#backdropElement;
+      if (!backdrop) return;
+      let block = 'center';
+      let newPlacement = placement;
+      // for mobile devices
+      // if (window.innerWidth <= 480 && (placement === 'left' || placement === 'right')) newPlacement = 'bottom'; 
+  
+      const elem = this.#getElement(element);
+      if (!elem) return this.end();
+      const body = this.#bodyElement;
+      if (!body) return;
+      body.classList.add(this.#references.stop_scroll);
+      elem.scrollIntoView({ behavior: 'smooth', block });
+  
+      const styles = getComputedStyle(elem);
+      const elemBoundaries = this.#getBoundingClientRect(elem);
+      const activeElement = this.#createActive(backdrop, elemBoundaries, styles);
+      const { descriptionElement } = this.#createDescription(elem, backdrop, description, activeElement, newPlacement);
+      if (!descriptionElement) return; 
+    } catch (err) {
+      console.log(err);
+    }
   };
   createSequence() {
     try {
@@ -384,6 +391,7 @@ class TooltipSequence {
       if (!haveAttachedListeners) return;
       this.#renderSequenceStep();
     } catch (err) {
+      console.log(err);
       throw new Error('Oops, something went wrong while creating the sequence');
     }
   };
