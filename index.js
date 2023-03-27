@@ -29,8 +29,8 @@ class TooltipSequence {
     end_text: "Finish",
   };
   #data = {
-    backdropColor: "#1414147e",
-    backdropShadow: true,
+    backdropConfig: { type: "shadow", color: "#1414147e" },
+    // backdropColor: "#1414147e",
     sequence: [],
     onComplete: function() {}
   };
@@ -152,42 +152,65 @@ class TooltipSequence {
     }
   };
   #createActive(backdrop, elemBoundaries, styles) {
-    const { backdropColor, backdropShadow } = this.#data;
+    const { backdropConfig } = this.#data;
+    // const getElementById = (e) => this.#getElementById(e);
     function addStyles(element) {
       element.style.height = elemBoundaries.height + "px";
       element.style.width = elemBoundaries.width + "px";
       element.style.backgroundColor = "transparent";
-      if (backdropShadow) {
-        element.style.boxShadow = "0 0 0 9999px " + backdropColor;
+      if (backdropConfig.type === 'shadow') {
+        element.style.boxShadow = "0 0 0 9999px " + backdropConfig.color;
       } else {
-        const topCentre = document.createElement('div');
-        topCentre.style.height = elemBoundaries.top + "px";
-        topCentre.style.left = elemBoundaries.left + "px";
-        topCentre.style.width = elemBoundaries.width + "px";
-        topCentre.style.position = "absolute";
-        topCentre.style.backgroundColor = "#ffffff";
-        backdrop.append(topCentre);
-        console.log(elemBoundaries);
+        // console.log(elemBoundaries);
+        // let topElem = getElementById('tooltip-helper-backdrop-top-element');
+        // if (topElem) topElem.parentNode.removeChild(topElem);
+
+        // topElem = document.createElement('div');
+        // topElem.style.top = "0px";
+        // topElem.style.left = "0px";
+        // topElem.style.height = screen.height + "px";
+        // topElem.style.width = screen.width + "px";
+        // topElem.style.position = "absolute";
+        // topElem.style.backgroundColor = backdropConfig.color;
+        // topElem.id = "tooltip-helper-backdrop-top-element";
+        // topElem.style.clipPath = `polygon(
+        //   ${elemBoundaries.left}px ${elemBoundaries.top}px, 
+        //   ${elemBoundaries.left + elemBoundaries.width}px ${elemBoundaries.top}px,
+        //   ${elemBoundaries.left + elemBoundaries.width}px ${elemBoundaries.top + elemBoundaries.height}px,
+        //   ${elemBoundaries.left}px ${elemBoundaries.top + elemBoundaries.height}px,
+        //   ${elemBoundaries.left}px ${elemBoundaries.top}px,
+        // )`;
+        // if (backdropConfig.type === "glass") {
+        //   const blur = "blur(4px)";
+        //   topElem.style["backdrop-filter"] = blur;
+        //   topElem.style.opacity = 0.5;
+        //   bottomElem.style.filter = blur;
+        //   bottomElem.style.opacity = 0.5;
+        //   leftElem.style.filter = blur;
+        //   leftElem.style.opacity = 0.5;
+        //   rightElem.style.filter = blur;
+        //   rightElem.style.opacity = 0.5;
+        // }
+        // backdrop.append(topElem);
       }
       element.style.transform = `translate3d(${elemBoundaries.x}px, ${elemBoundaries.y}px, 0px)`;
       return element;
     }
-    const activeElement = this.#getElement(`#${this.#references.backdrop} .${this.#references.active}`);
+    let activeElement = this.#getElement(`#${this.#references.backdrop} .${this.#references.active}`);
     const targetEl = this.#getElement(this.#data.sequence[this.#index].element);
     if (!activeElement) {
-      const activeElement = document.createElement("div");
+      activeElement = document.createElement("div");
       activeElement.setAttribute("id", this.#references.active);
       activeElement.classList.add(this.#references.active);
       backdrop.append(activeElement);
-      return addStyles(activeElement, targetEl.className);
+    } else {
+      activeElement.removeAttribute("class");
+      activeElement.classList.add(this.#references.active);
     }
-    activeElement.removeAttribute("class");
-    activeElement.classList.add(this.#references.active);
     return addStyles(activeElement, targetEl.className);
   };
   #createDescription(elem, backdrop, description, active, plcmt) {
     try {
-
       let descriptionElement = this.#getElement(`#${this.#references.backdrop} .${this.#references.active_description}`);
       let placement = plcmt;
       if (!descriptionElement) {

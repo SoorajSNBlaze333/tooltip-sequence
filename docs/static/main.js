@@ -32,8 +32,8 @@ var createSequence = (function () {
       end_text: "Finish",
     };
     #data = {
-      backdropColor: "#1414147e",
-      backdropShadow: true,
+      backdropConfig: { type: "shadow", color: "#1414147e" },
+      // backdropColor: "#1414147e",
       sequence: [],
       onComplete: function() {}
     };
@@ -155,42 +155,33 @@ var createSequence = (function () {
       }
     };
     #createActive(backdrop, elemBoundaries, styles) {
-      const { backdropColor, backdropShadow } = this.#data;
+      const { backdropConfig } = this.#data;
+      // const getElementById = (e) => this.#getElementById(e);
       function addStyles(element) {
         element.style.height = elemBoundaries.height + "px";
         element.style.width = elemBoundaries.width + "px";
         element.style.backgroundColor = "transparent";
-        if (backdropShadow) {
-          element.style.boxShadow = "0 0 0 9999px " + backdropColor;
-        } else {
-          const topCentre = document.createElement('div');
-          topCentre.style.height = elemBoundaries.top + "px";
-          topCentre.style.left = elemBoundaries.left + "px";
-          topCentre.style.width = elemBoundaries.width + "px";
-          topCentre.style.position = "absolute";
-          topCentre.style.backgroundColor = "#ffffff";
-          backdrop.append(topCentre);
-          console.log(elemBoundaries);
+        if (backdropConfig.type === 'shadow') {
+          element.style.boxShadow = "0 0 0 9999px " + backdropConfig.color;
         }
         element.style.transform = `translate3d(${elemBoundaries.x}px, ${elemBoundaries.y}px, 0px)`;
         return element;
       }
-      const activeElement = this.#getElement(`#${this.#references.backdrop} .${this.#references.active}`);
+      let activeElement = this.#getElement(`#${this.#references.backdrop} .${this.#references.active}`);
       const targetEl = this.#getElement(this.#data.sequence[this.#index].element);
       if (!activeElement) {
-        const activeElement = document.createElement("div");
+        activeElement = document.createElement("div");
         activeElement.setAttribute("id", this.#references.active);
         activeElement.classList.add(this.#references.active);
         backdrop.append(activeElement);
-        return addStyles(activeElement, targetEl.className);
+      } else {
+        activeElement.removeAttribute("class");
+        activeElement.classList.add(this.#references.active);
       }
-      activeElement.removeAttribute("class");
-      activeElement.classList.add(this.#references.active);
       return addStyles(activeElement, targetEl.className);
     };
     #createDescription(elem, backdrop, description, active, plcmt) {
       try {
-
         let descriptionElement = this.#getElement(`#${this.#references.backdrop} .${this.#references.active_description}`);
         let placement = plcmt;
         if (!descriptionElement) {
