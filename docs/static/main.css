@@ -102,8 +102,18 @@
   margin-right: 10px;
 }
 
+.tooltip-helper-header {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 10px;
+}
+
 .tooltip-helper-quit-sequence {
-  background-color: rgb(131, 131, 131);
+  background-color: rgb(213, 72, 72);
+  width: 30px;
+  padding: 5px;
+  fill: none;
 }
 
 .tooltip-disabled-btn {

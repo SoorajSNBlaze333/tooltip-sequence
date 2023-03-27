@@ -30,6 +30,7 @@ class TooltipSequence {
   };
   #data = {
     backdropColor: "#1414147e",
+    backdropShadow: true,
     sequence: [],
     onComplete: function() {}
   };
@@ -151,15 +152,26 @@ class TooltipSequence {
     }
   };
   #createActive(backdrop, elemBoundaries, styles) {
+    const { backdropColor, backdropShadow } = this.#data;
     function addStyles(element) {
       element.style.height = elemBoundaries.height + "px";
       element.style.width = elemBoundaries.width + "px";
       element.style.backgroundColor = "transparent";
-      element.style.boxShadow = "0 0 0 9999px " + backdropColor;
+      if (backdropShadow) {
+        element.style.boxShadow = "0 0 0 9999px " + backdropColor;
+      } else {
+        const topCentre = document.createElement('div');
+        topCentre.style.height = elemBoundaries.top + "px";
+        topCentre.style.left = elemBoundaries.left + "px";
+        topCentre.style.width = elemBoundaries.width + "px";
+        topCentre.style.position = "absolute";
+        topCentre.style.backgroundColor = "#ffffff";
+        backdrop.append(topCentre);
+        console.log(elemBoundaries);
+      }
       element.style.transform = `translate3d(${elemBoundaries.x}px, ${elemBoundaries.y}px, 0px)`;
       return element;
     }
-    const { backdropColor } = this.#data;
     const activeElement = this.#getElement(`#${this.#references.backdrop} .${this.#references.active}`);
     const targetEl = this.#getElement(this.#data.sequence[this.#index].element);
     if (!activeElement) {
@@ -183,7 +195,7 @@ class TooltipSequence {
         descriptionElement.style.willChange = "transform";
         descriptionElement.classList.add(this.#references.active_description);
         descriptionElement.innerHTML += `<div class=${this.#references.header}>
-          <svg id=${this.#references.quit} class=${this.#references.quit} xmlns="http://www.w3.org/2000/svg" width="192" height="192" fill="#000000" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><circle cx="128" cy="128" r="96" fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="16"></circle><line x1="160" y1="96" x2="96" y2="160" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line><line x1="160" y1="160" x2="96" y2="96" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line></svg>
+          <svg id=${this.#references.quit} class=${this.#references.quit} xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 256 256"><rect width="256" height="256"></rect><circle cx="128" cy="128" r="96" fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="16"></circle><line x1="160" y1="96" x2="96" y2="160" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line><line x1="160" y1="160" x2="96" y2="96" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line></svg>
         </div>`
         descriptionElement.innerHTML += `<p id=${this.#references.active_description_text}></p>`;
         descriptionElement.innerHTML += `<div class=${this.#references.footer}>
@@ -391,7 +403,6 @@ class TooltipSequence {
       if (!haveAttachedListeners) return;
       this.#renderSequenceStep();
     } catch (err) {
-      console.log(err);
       throw new Error('Oops, something went wrong while creating the sequence');
     }
   };
